@@ -47,7 +47,13 @@ export default [
             // "eslint-plugin-import" doesn't work properly in flat eslint configuration
             // but some recommended rules can be applied from it directly until the plugin is upgraded
             // see https://github.com/import-js/eslint-plugin-import/issues/2556
-            ...importPlugin.configs.recommended.rules,
+            'import/no-unresolved': 'error',
+            'import/named': 'error',
+            'import/default': 'off',
+            'import/export': 'error',
+            'import/no-named-as-default': 'off',
+            'import/no-named-as-default-member': 'off',
+            'import/no-duplicates': 'warn',
             'import/first': 'error',
             'import/namespace': 'off',
 
