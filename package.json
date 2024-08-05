@@ -1,65 +1,69 @@
 {
-  "name": "@celtra/circleci-v2",
-  "version": "1.0.0",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/celtra/circleci-v2-js.git"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
-  },
-  "author": "Celtra Developers <developers@celtra.com>",
-  "files": [
-    "dist/*.js",
-    "dist/*.js.map",
-    "dist/*.d.ts"
-  ],
-  "type": "module",
-  "sideEffects": false,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "generate": "tsx src/scripts/generate.ts",
-    "generate:check": "tsx src/scripts/generate.ts --check",
-    "build": "tsup",
-    "type:check": "tsc --project tsconfig.json --pretty --noEmit --skipLibCheck",
-    "test": "vitest",
-    "lint": "xo",
-    "lint:fix": "xo --fix",
-    "release": "auto shipit",
-    "canary": "auto canary --pr"
-  },
-  "devDependencies": {
-    "@types/node": "^22.1.0",
-    "auto": "^11.2.0",
-    "msw": "^2.3.5",
-    "openapi-typescript": "^7.3.0",
-    "ts-node": "^10.9.2",
-    "tsup": "^8.2.4",
-    "tsx": "^4.16.5",
-    "typescript": "^5.5.4",
-    "vitest": "^2.0.5",
-    "xo": "^0.59.3"
-  },
-  "peerDependencies": {
-    "openapi-fetch": ">=0.10.5"
-  },
-  "auto": {
-    "plugins": [
-      "npm",
-      "released"
-    ]
-  },
-  "xo": {
-    "space": 4,
-    "semicolon": false,
-    "ignores": [
-      "src/schema.d.ts"
+    "name": "@celtra/circleci-v2",
+    "version": "1.0.0",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/celtra/circleci-v2-js.git"
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/",
+        "access": "public"
+    },
+    "author": "Celtra Developers <developers@celtra.com>",
+    "files": [
+        "dist/*.js",
+        "dist/*.js.map",
+        "dist/*.d.ts"
     ],
-    "rules": {
-      "new-cap": 0
+    "type": "module",
+    "sideEffects": false,
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "generate": "tsx src/scripts/generate.ts",
+        "generate:check": "tsx src/scripts/generate.ts --check",
+        "build": "tsup",
+        "type:check": "tsc --project tsconfig.json --pretty --noEmit --skipLibCheck",
+        "test": "vitest",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
+        "release": "auto shipit",
+        "canary": "auto canary --pr"
+    },
+    "devDependencies": {
+        "@stylistic/eslint-plugin-ts": "^2.6.1",
+        "@types/node": "^22.1.0",
+        "@typescript-eslint/eslint-plugin": "^8.0.0",
+        "@typescript-eslint/parser": "^8.0.0",
+        "auto": "^11.2.0",
+        "eslint": "^8.57.0",
+        "eslint-plugin-import": "^2.29.1",
+        "eslint-plugin-jest": "^28.7.0",
+        "msw": "^2.3.5",
+        "openapi-fetch": "^0.10.5",
+        "openapi-typescript": "^7.3.0",
+        "ts-node": "^10.9.2",
+        "tsup": "^8.2.4",
+        "tsx": "^4.16.5",
+        "typescript": "^5.5.4",
+        "typescript-eslint": "^8.0.0",
+        "vitest": "^2.0.5"
+    },
+    "auto": {
+        "plugins": [
+            "npm",
+            "released"
+        ]
+    },
+    "xo": {
+        "space": 4,
+        "semicolon": false,
+        "ignores": [
+            "schema/index.d.ts"
+        ],
+        "rules": {
+            "new-cap": 0
+        }
     }
-  }
 }

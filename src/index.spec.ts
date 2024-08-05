@@ -1,16 +1,16 @@
 import {
     beforeAll, describe, expect, test,
 } from 'vitest'
-import {http, HttpResponse} from 'msw'
-import {setupServer} from 'msw/node'
-import {createClient} from './index.js'
+import { http, HttpResponse } from 'msw'
+import { setupServer } from 'msw/node'
+import { createClient } from './index'
 
 describe('client', () => {
     beforeAll(() => {
         const handlers = [
-            http.get('https://circleci.com/api/v2/workflow/abcd', ({request}) => {
+            http.get('https://circleci.com/api/v2/workflow/abcd', ({ request }) => {
                 if (request.headers.get('Circle-Token') !== 'myToken') {
-                    return HttpResponse.json({}, {status: 401})
+                    return HttpResponse.json({}, { status: 401 })
                 }
 
                 return HttpResponse.json({
@@ -26,13 +26,13 @@ describe('client', () => {
     test('fetch a workflow', async () => {
         const client = createClient('myToken')
 
-        const workflow = await client.GET('/workflow/{id}', ({
+        const workflow = await client.GET('/workflow/{id}', {
             params: {
                 path: {
                     id: 'abcd',
                 },
             },
-        }))
+        })
 
         if (workflow.error !== undefined) {
             throw new Error(`Couldn't fetch workflow due to: ${workflow.error.message}`)

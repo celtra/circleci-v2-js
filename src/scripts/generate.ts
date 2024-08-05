@@ -1,29 +1,39 @@
 import {
+    access,
     mkdtemp,
+    readFile,
     realpath,
     rm,
-    readFile,
     writeFile,
-    access,
 } from 'node:fs/promises'
-import {tmpdir} from 'node:os'
+import { tmpdir } from 'node:os'
 import path from 'node:path'
 import process from 'node:process'
-import openapiTS, {astToString} from 'openapi-typescript'
+import openapiTS, { astToString } from 'openapi-typescript'
 
-async function withTemporaryDirectory<T>(function_: (directory: string) => Promise<T>): Promise<T> {
+async function withTemporaryDirectory<T> (f: (directory: string) => Promise<T>): Promise<T> {
     const directory = await mkdtemp(await realpath(tmpdir()) + path.sep)
     try {
-        return await function_(directory)
+        return await f(directory)
     } finally {
-        await rm(directory, {recursive: true})
+        await rm(directory, { recursive: true })
     }
+}
+
+async function fileExists (filePath: string): Promise<boolean> {
+    try {
+        await access(filePath)
+    } catch {
+        return false
+    }
+
+    return true
 }
 
 /**
  * CircleCI doesn't publishes OpenAPI specs file, so we need to parse it from the generate HTML.
  */
-async function getOpenApiSpecification(): Promise<unknown> {
+async function fetchOpenApiSpecification (): Promise<unknown> {
     const page = await fetch('https://circleci.com/docs/api/v2/index.html')
     const text = await page.text()
     const redocStateLines = text.split('\n').filter(line => line.includes('__redoc_state ='))
@@ -48,13 +58,13 @@ async function getOpenApiSpecification(): Promise<unknown> {
         throw new Error('Couldn\'t find match with regex')
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     return JSON.parse(match).spec.data
 }
 
-async function generate(): Promise<string> {
+async function generate (): Promise<string> {
     // Fetch specification.
-    const openApiSpec = await getOpenApiSpecification()
+    const openApiSpec = await fetchOpenApiSpecification()
 
     // Generate client.
     return withTemporaryDirectory(async temporaryDirectory => {
@@ -66,17 +76,7 @@ async function generate(): Promise<string> {
     })
 }
 
-async function fileExists(filePath: string): Promise<boolean> {
-    try {
-        await access(filePath)
-    } catch {
-        return false
-    }
-
-    return true
-}
-
-async function checkIfGeneratedCodeUpToDate(destinationPath: string): Promise<boolean> {
+async function checkIfGeneratedCodeUpToDate (destinationPath: string): Promise<boolean> {
     if (!await fileExists(destinationPath)) {
         throw new Error('Schema is not present')
     }
@@ -87,15 +87,15 @@ async function checkIfGeneratedCodeUpToDate(destinationPath: string): Promise<bo
     return existingSchema.toString() === generatedSchema
 }
 
-async function main(): Promise<void> {
-    const destinationPath = path.join(import.meta.dirname, '..', 'schema.d.ts')
-    const arguments_ = process.argv.slice(2)
+async function main (): Promise<void> {
+    const destinationPath = path.join(import.meta.dirname, '..', '..', 'schema', 'index.d.ts')
+    const args = process.argv.slice(2)
 
-    if (arguments_.length === 0) {
+    if (args.length === 0) {
         return writeFile(destinationPath, await generate())
     }
 
-    if (arguments_.length === 1 && arguments_[0] === '--check') {
+    if (args.length === 1 && args[0] === '--check') {
         const upToDate = await checkIfGeneratedCodeUpToDate(destinationPath)
 
         if (upToDate) {
@@ -106,7 +106,7 @@ async function main(): Promise<void> {
         throw new Error('Generated code not up to date. Please run \'npm run generate\'')
     }
 
-    throw new Error(`Usage: 'npm run generate [--check]', received args: ${arguments_.join(' ')}`)
+    throw new Error(`Usage: 'npm run generate [--check]', received args: ${args.join(' ')}`)
 }
 
 await main()

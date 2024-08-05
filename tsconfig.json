@@ -1,35 +1,36 @@
 {
-  "compilerOptions": {
-      "target": "esnext",
-      "module": "esnext",
-      "moduleResolution": "node",
-      "alwaysStrict": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "strictBindCallApply": true,
-      "strictFunctionTypes": true,
-      "noImplicitAny": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "noFallthroughCasesInSwitch": true,
-      "strictPropertyInitialization": true,
-      "exactOptionalPropertyTypes": true,
-      "allowUnreachableCode": false,
-      "allowUnusedLabels": false,
-      "noImplicitOverride": true,
-      "noImplicitReturns": true,
-      "noUncheckedIndexedAccess": true,
-      "useUnknownInCatchVariables": true,
-      "inlineSourceMap": true,
-      "resolveJsonModule": true,
-      "esModuleInterop": true,
-      "baseUrl": "."
-  },
-  "include": [
-      "src",
-  ],
-  "exclude": [
-      "./node_modules",
-  ]
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "alwaysStrict": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+        "strictPropertyInitialization": true,
+        "exactOptionalPropertyTypes": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noUncheckedIndexedAccess": true,
+        "useUnknownInCatchVariables": true,
+        "inlineSourceMap": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "baseUrl": "."
+    },
+    "include": [
+        "src",
+        "schema"
+    ],
+    "exclude": [
+        "./node_modules"
+    ]
 }
