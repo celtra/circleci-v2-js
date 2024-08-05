@@ -1,66 +1,43 @@
-import {expect, test, vi} from 'vitest'
-import createFetchMock from 'vitest-fetch-mock'
-import {createClient, getWorkflowById, type GetWorkflowByIdResponse} from './index.js'
+import {
+    beforeAll, describe, expect, test,
+} from 'vitest'
+import {http, HttpResponse} from 'msw'
+import {setupServer} from 'msw/node'
+import {createClient} from './index.js'
 
-async function getUnderlyingErrorMessage<T>(f: () => Promise<T>): Promise<string> {
-    try {
-        await f()
-    } catch (error) {
-        if (error instanceof Error && error.cause instanceof Error) {
-            return error.cause.message
-        }
+describe('client', () => {
+    beforeAll(() => {
+        const handlers = [
+            http.get('https://circleci.com/api/v2/workflow/abcd', ({request}) => {
+                if (request.headers.get('Circle-Token') !== 'myToken') {
+                    return HttpResponse.json({}, {status: 401})
+                }
 
-        throw error
-    }
+                return HttpResponse.json({
+                    id: 'abcd',
+                })
+            }),
+        ]
 
-    throw new Error('Wrapped function didn\'t throw')
-}
+        const server = setupServer(...handlers)
+        server.listen()
+    })
 
-test('global client is disabled', async () => {
-    const error = await getUnderlyingErrorMessage(async () =>
-        getWorkflowById({
-            path: {
-                id: 'abcd',
-            },
-        }),
-    )
+    test('fetch a workflow', async () => {
+        const client = createClient('myToken')
 
-    expect(error).toMatch('global+client+is+disabled')
-})
-
-test('fetching with local client', async () => {
-    const fetchMocker = createFetchMock(vi)
-    fetchMocker.enableMocks()
-
-    fetchMocker.mockIf(/^https?:\/\/circleci.com.*$/, request => {
-        if (request.url.endsWith('/api/v2/workflow/abcd') && request.headers.get('Circle-Token') === 'myToken') {
-            const resp: Partial<GetWorkflowByIdResponse> = {
-                id: 'abcd',
-            }
-
-            return {
-                status: 200,
-                headers: {
-                    'Content-Type': 'application/json',
+        const workflow = await client.GET('/workflow/{id}', ({
+            params: {
+                path: {
+                    id: 'abcd',
                 },
-                body: JSON.stringify(resp),
-            }
+            },
+        }))
+
+        if (workflow.error !== undefined) {
+            throw new Error(`Couldn't fetch workflow due to: ${workflow.error.message}`)
         }
 
-        return {
-            status: 404,
-            body: 'Not Found',
-        }
+        expect(workflow.data.id).toBe('abcd')
     })
-
-    const client = createClient('myToken')
-
-    const workflow = await getWorkflowById({
-        client,
-        path: {
-            id: 'abcd',
-        },
-    })
-
-    expect(workflow.data?.id).toBe('abcd')
 })

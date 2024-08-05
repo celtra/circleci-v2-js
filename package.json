@@ -32,20 +32,19 @@
     "canary": "auto canary --pr"
   },
   "devDependencies": {
-    "@hey-api/openapi-ts": "^0.52.0",
     "@types/node": "^22.1.0",
     "auto": "^11.2.0",
-    "dir-compare": "^5.0.0",
+    "msw": "^2.3.5",
+    "openapi-typescript": "^7.3.0",
     "ts-node": "^10.9.2",
     "tsup": "^8.2.4",
     "tsx": "^4.16.5",
     "typescript": "^5.5.4",
     "vitest": "^2.0.5",
-    "vitest-fetch-mock": "^0.3.0",
     "xo": "^0.59.3"
   },
   "peerDependencies": {
-    "@hey-api/client-fetch": ">=0.2.0"
+    "openapi-fetch": ">=0.10.5"
   },
   "auto": {
     "plugins": [
@@ -57,7 +56,10 @@
     "space": 4,
     "semicolon": false,
     "ignores": [
-      "src/client/"
-    ]
+      "src/schema.d.ts"
+    ],
+    "rules": {
+      "new-cap": 0
+    }
   }
 }

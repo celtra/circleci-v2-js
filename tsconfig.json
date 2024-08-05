@@ -24,7 +24,6 @@
       "inlineSourceMap": true,
       "resolveJsonModule": true,
       "esModuleInterop": true,
-      "allowImportingTsExtensions": true,
       "baseUrl": "."
   },
   "include": [

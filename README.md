@@ -9,10 +9,17 @@ import {createClient, getWorkflowById} from '@celtra/circleci-v2'
 
 const client = createClient('myToken')
 
-const workflow = await getWorkflowById({
-    client,
-    path: {
-        id: 'abcd',
+const workflow = await client.GET('/workflow/{id}', ({
+    params: {
+        path: {
+            id: 'abcd',
+        },
     },
-})
+}))
+
+if (workflow.error !== undefined) {
+    throw new Error(`Couldn't fetch workflow due to: ${workflow.error.message}`)
+}
+
+expect(workflow.data.id).toBe('abcd')
 ```

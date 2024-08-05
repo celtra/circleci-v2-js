@@ -1,15 +1,15 @@
 import {
     mkdtemp,
-    readFile,
     realpath,
     rm,
+    readFile,
     writeFile,
+    access,
 } from 'node:fs/promises'
 import {tmpdir} from 'node:os'
 import path from 'node:path'
 import process from 'node:process'
-import {createClient} from '@hey-api/openapi-ts'
-import {compare} from 'dir-compare'
+import openapiTS, {astToString} from 'openapi-typescript'
 
 async function withTemporaryDirectory<T>(function_: (directory: string) => Promise<T>): Promise<T> {
     const directory = await mkdtemp(await realpath(tmpdir()) + path.sep)
@@ -52,54 +52,51 @@ async function getOpenApiSpecification(): Promise<unknown> {
     return JSON.parse(match).spec.data
 }
 
-async function generate(destinationDirectory: string): Promise<void> {
+async function generate(): Promise<string> {
     // Fetch specification.
     const openApiSpec = await getOpenApiSpecification()
 
     // Generate client.
-    await withTemporaryDirectory(async temporaryDirectory => {
+    return withTemporaryDirectory(async temporaryDirectory => {
         const specPath = path.join(temporaryDirectory, 'openapi.json')
         await writeFile(specPath, JSON.stringify(openApiSpec))
 
-        await createClient({
-            client: '@hey-api/client-fetch',
-            input: specPath,
-            output: destinationDirectory,
-        })
+        const ast = await openapiTS(new URL(specPath, import.meta.url))
+        return astToString(ast)
     })
-
-    // DTS cannot be built if `client` type is not provided.
-    const servicesPath = path.join(destinationDirectory, 'services.gen.ts')
-    const services = await readFile(servicesPath)
-    const modified = services
-        .toString()
-        .replace('import { createClient,', 'import { Client, createClient,')
-        .replace('export const client = createClient(createConfig());', 'export const client: Client = createClient(createConfig());')
-    await writeFile(servicesPath, modified)
 }
 
-async function checkIfGeneratedCodeUpToDate(codeDirectory: string): Promise<boolean> {
-    return withTemporaryDirectory(async temporaryDirectory => {
-        await generate(temporaryDirectory)
+async function fileExists(filePath: string): Promise<boolean> {
+    try {
+        await access(filePath)
+    } catch {
+        return false
+    }
 
-        const result = await compare(codeDirectory, temporaryDirectory, {
-            compareContent: true,
-        })
+    return true
+}
 
-        return result.same
-    })
+async function checkIfGeneratedCodeUpToDate(destinationPath: string): Promise<boolean> {
+    if (!await fileExists(destinationPath)) {
+        throw new Error('Schema is not present')
+    }
+
+    const existingSchema = await readFile(destinationPath)
+    const generatedSchema = await generate()
+
+    return existingSchema.toString() === generatedSchema
 }
 
 async function main(): Promise<void> {
-    const codeDirectory = 'src/client'
+    const destinationPath = path.join(import.meta.dirname, '..', 'schema.d.ts')
     const arguments_ = process.argv.slice(2)
 
     if (arguments_.length === 0) {
-        return generate(codeDirectory)
+        return writeFile(destinationPath, await generate())
     }
 
     if (arguments_.length === 1 && arguments_[0] === '--check') {
-        const upToDate = await checkIfGeneratedCodeUpToDate(codeDirectory)
+        const upToDate = await checkIfGeneratedCodeUpToDate(destinationPath)
 
         if (upToDate) {
             console.log('Generate code up to date.')
