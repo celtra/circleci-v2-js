@@ -3,7 +3,7 @@ import {
 } from 'vitest'
 import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
-import { createClient } from './index'
+import { createClient, operations } from './index'
 
 describe('client', () => {
     beforeAll(() => {
@@ -38,6 +38,7 @@ describe('client', () => {
             throw new Error(`Couldn't fetch workflow due to: ${workflow.error.message}`)
         }
 
-        expect(workflow.data.id).toBe('abcd')
+        const data: operations['getWorkflowById']['responses']['200']['content']['application/json'] = workflow.data
+        expect(data.id).toBe('abcd')
     })
 })

@@ -1,5 +1,7 @@
 import createFetchClient, { type Client } from 'openapi-fetch'
-import type { paths } from '../schema'
+import type { components, operations, paths } from '../schema'
+
+export type { paths, components, operations }
 
 export function createClient (token: string): Client<paths> {
     return createFetchClient<paths>({
