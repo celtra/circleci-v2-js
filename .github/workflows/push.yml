@@ -36,6 +36,7 @@ jobs:
       - name: Create Canary release
         if: github.ref != 'refs/heads/main'
         env:
+          GH_TOKEN: ${{ secrets.CELTRA_DEPLOYER_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPMJS_WRITE_TOKEN }}
         run: npm run canary
       
