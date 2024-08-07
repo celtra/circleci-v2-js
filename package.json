@@ -56,15 +56,5 @@
             "npm",
             "released"
         ]
-    },
-    "xo": {
-        "space": 4,
-        "semicolon": false,
-        "ignores": [
-            "schema/index.d.ts"
-        ],
-        "rules": {
-            "new-cap": 0
-        }
     }
 }
