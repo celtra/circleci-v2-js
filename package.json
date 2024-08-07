@@ -32,6 +32,7 @@
         "canary": "auto canary --pr"
     },
     "devDependencies": {
+        "@auto-it/protected-branch": "^11.2.0",
         "@stylistic/eslint-plugin-ts": "^2.6.1",
         "@types/node": "^22.1.0",
         "@typescript-eslint/eslint-plugin": "^8.0.0",
@@ -54,7 +55,8 @@
     "auto": {
         "plugins": [
             "npm",
-            "released"
+            "released",
+            "protected-branch"
         ]
     }
 }
