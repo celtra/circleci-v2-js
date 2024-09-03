@@ -1,5 +1,3 @@
-/* eslint-disable @stylistic/ts/quotes */
-/* eslint-disable @typescript-eslint/naming-convention */
 export interface artifactPaths {
     "/output/job/{uuid}/artifacts/{node-index}/{path}": {
         get: artifactOperations['getArtifact']
