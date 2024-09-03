@@ -26,7 +26,7 @@ describe('client', () => {
     test('fetch a workflow', async () => {
         const client = createClient('myToken')
 
-        const workflow = await client.GET('/workflow/{id}', {
+        const workflow = await client.api.GET('/workflow/{id}', {
             params: {
                 path: {
                     id: 'abcd',
