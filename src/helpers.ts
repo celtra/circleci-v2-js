@@ -1,13 +1,9 @@
 export class Helpers {
-    private token: string
-
-    constructor (token: string) {
-        this.token = token
-    }
+    constructor (private token: string) {}
 
     async downloadArtifactFromURL (url: string): Promise<ArrayBuffer> {
-        if (!url.startsWith('https://')) {
-            throw new Error('Artifacts can only be downloaded via https URL')
+        if (!url.startsWith('https://output.circle-artifacts.com')) {
+            throw new Error('Artifact url must start with https://output.circle-artifacts.com')
         }
 
         const headers = new Headers()

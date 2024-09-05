@@ -5,7 +5,7 @@ import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { createClient } from './index'
 
-const artifactUrlBase = 'https://output-circle-artifacts.com/output/job/1a23-456b/artifacts/0/tmp/'
+const artifactUrlBase = 'https://output.circle-artifacts.com/output/job/1a23-456b/artifacts/0/tmp/'
 
 describe('client', () => {
     beforeAll(() => {
@@ -36,7 +36,8 @@ describe('client', () => {
         try {
             await client.helpers.downloadArtifactFromURL(artifactUrlBase.replace('https://', 'http://'))
         } catch (error) {
-            expect((error as NodeJS.ErrnoException).message).toBe('Artifacts can only be downloaded via https URL')
+            expect((error as NodeJS.ErrnoException).message).
+                toBe('Artifact url must start with https://output.circle-artifacts.com')
         }
     })
 
