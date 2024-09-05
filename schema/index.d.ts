@@ -293,6 +293,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/jobs/{job-id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel job by job ID
+         * @description Cancel job with a given job ID.
+         */
+        post: operations["cancelJobByJobID"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/me": {
         parameters: {
             query?: never;
@@ -588,10 +608,10 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Cancel job
+         * Cancel job by job number
          * @description Cancel job with a given job number.
          */
-        post: operations["cancelJob"];
+        post: operations["cancelJobByJobNumber"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3150,6 +3170,11 @@ export interface operations {
                  * @example last-90-days
                  */
                 "reporting-window"?: "last-7-days" | "last-90-days" | "last-24-hours" | "last-30-days" | "last-60-days";
+                /**
+                 * @description The name of the jobs you would like to filter from your workflow. If not specified, all workflow jobs will be returned. The job name can either be the full job name or just a substring of the job name.
+                 * @example lint
+                 */
+                "job-name"?: string;
             };
             header?: never;
             path: {
@@ -3602,6 +3627,91 @@ export interface operations {
                                 total: number;
                             };
                         }[];
+                    };
+                };
+            };
+            /** @description Error response. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message?: string;
+                    };
+                };
+            };
+        };
+    };
+    cancelJobByJobID: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The unique ID of the job. */
+                "job-id": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Job cancelled successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description A human-readable message */
+                        message: string;
+                    };
+                };
+            };
+            /** @description Bad request error. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description A human-readable message */
+                        message: string;
+                    };
+                };
+            };
+            /** @description Unauthorized error. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description A human-readable message */
+                        message: string;
+                    };
+                };
+            };
+            /** @description Forbidden error. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description A human-readable message */
+                        message: string;
+                    };
+                };
+            };
+            /** @description Job not found error. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description A human-readable message */
+                        message: string;
                     };
                 };
             };
@@ -4972,7 +5082,7 @@ export interface operations {
             };
         };
     };
-    cancelJob: {
+    cancelJobByJobNumber: {
         parameters: {
             query?: never;
             header?: never;
