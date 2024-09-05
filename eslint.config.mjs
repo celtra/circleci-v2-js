@@ -13,7 +13,6 @@ export default [
             'eslint.config.mjs',
             '**/dist',
             'schema/index.d.ts',
-            'schema/artifactIndex.d.ts',
             'tsup.config.js',
         ],
     },
