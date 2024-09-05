@@ -1,11 +1,11 @@
 import createFetchClient, { type Client } from 'openapi-fetch'
 import type { components, operations, paths } from '../schema'
-import type { artifactOperations, artifactPaths } from 'schema/artifactIndex'
+import { Helpers } from './helpers'
 
-export type { paths, components, operations, artifactOperations, artifactPaths }
+export type { paths, components, operations }
 
 export function createClient (token: string): { api: Client<paths>,
-    artifacts: Client<artifactPaths> } {
+    helpers: Helpers } {
     return { api: createFetchClient<paths>({
         baseUrl: 'https://circleci.com/api/v2',
         headers: {
@@ -15,11 +15,5 @@ export function createClient (token: string): { api: Client<paths>,
             'Content-Type': 'application/json',
         },
     }),
-    artifacts: createFetchClient<artifactPaths>({
-        baseUrl: 'https://output.circle-artifacts.com',
-        headers: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            'Circle-Token': token,
-        },
-    }) }
+    helpers: new Helpers(token) }
 }
