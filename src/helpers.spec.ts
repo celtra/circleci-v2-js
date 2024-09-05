@@ -17,7 +17,6 @@ describe('client', () => {
                         return HttpResponse.json({}, { status: 401 })
                     }
 
-                    console.log(request.url.endsWith('artifact.txt'))
                     if (request.url.endsWith('artifact.txt')) {
                         return HttpResponse.text('This is a test artifact')
                     } else if (request.url.endsWith('artifact.json')) {
