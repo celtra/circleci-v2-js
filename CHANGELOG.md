@@ -1,3 +1,16 @@
+# v1.0.3 (Fri Sep 06 2024)
+
+#### 🐛 Bug Fix
+
+- [DEV-217] Change main branch to master [#5](https://github.com/celtra/circleci-v2-js/pull/5) ([@nikzupancic](https://github.com/nikzupancic))
+- [DEV-211] Proof of concept for retrieving artifacts [#4](https://github.com/celtra/circleci-v2-js/pull/4) ([@nikzupancic](https://github.com/nikzupancic))
+
+#### Authors: 1
+
+- Nik Zupančič ([@nikzupancic](https://github.com/nikzupancic))
+
+---
+
 # v1.0.2 (Wed Aug 07 2024)
 
 #### 🐛 Bug Fix
