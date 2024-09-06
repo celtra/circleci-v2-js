@@ -23,30 +23,30 @@ jobs:
 
       - name: Typecheck
         run: npm run type:check
-    
+
       - name: Test
         run: npm run test
-      
+
       - name: Check if we have up-to-date specifications
         run: npm run generate:check
-    
+
       - name: Build
         run: npm run build
 
       - name: Create Canary release
-        if: github.ref != 'refs/heads/main'
+        if: github.ref != 'refs/heads/master'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PROTECTED_BRANCH_REVIEWER_TOKEN: ${{ secrets.CELTRA_DEPLOYER_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPMJS_WRITE_TOKEN }}
         run: npm run canary
-      
+
       - name: Prepare repository
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         run: git fetch --unshallow --tags
-      
+
       - name: Create release
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PROTECTED_BRANCH_REVIEWER_TOKEN: ${{ secrets.CELTRA_DEPLOYER_GITHUB_TOKEN }}
