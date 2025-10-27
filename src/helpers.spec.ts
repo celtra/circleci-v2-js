@@ -37,7 +37,7 @@ describe('client', () => {
             await client.helpers.downloadArtifactFromURL(artifactUrlBase.replace('https://', 'http://'))
         } catch (error) {
             expect((error as NodeJS.ErrnoException).message).
-                toBe('Artifact url must start with https://output.circle-artifacts.com')
+                toBe('Artifact url must start with https://output.circle-artifacts.com (this is a test)')
         }
     })
 
