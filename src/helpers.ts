@@ -3,7 +3,7 @@ export class Helpers {
 
     async downloadArtifactFromURL (url: string): Promise<ArrayBuffer> {
         if (!url.startsWith('https://output.circle-artifacts.com')) {
-            throw new Error('Artifact url must start with https://output.circle-artifacts.com')
+            throw new Error('Artifact url must start with https://output.circle-artifacts.com (this is a test)')
         }
 
         const headers = new Headers()
