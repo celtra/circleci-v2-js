@@ -1,93 +1,4 @@
 export interface paths {
-    "/context": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List contexts
-         * @description List all contexts for an owner.
-         */
-        get: operations["listContexts"];
-        put?: never;
-        /**
-         * Create a new context
-         * @description Creates a new context.
-         */
-        post: operations["createContext"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/context/{context-id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get a context
-         * @description Returns basic information about a context.
-         */
-        get: operations["getContext"];
-        put?: never;
-        post?: never;
-        /** Delete a context */
-        delete: operations["deleteContext"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/context/{context-id}/environment-variable": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List environment variables
-         * @description List information about environment variables in a context, not including their values.
-         */
-        get: operations["listEnvironmentVariablesFromContext"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/context/{context-id}/environment-variable/{env-var-name}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /**
-         * Add or update an environment variable
-         * @description Create or update an environment variable within a context. Returns information about the environment variable, not including its value.
-         */
-        put: operations["addEnvironmentVariableToContext"];
-        post?: never;
-        /**
-         * Remove an environment variable
-         * @description Delete an environment variable from a context.
-         */
-        delete: operations["deleteEnvironmentVariableFromContext"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/insights/pages/{project-slug}/summary": {
         parameters: {
             query?: never;
@@ -359,6 +270,110 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/organization": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create a new organization
+         * @description Create a new organization. For VCS providers (GitHub/Bitbucket), this validates access and syncs org data. For standalone orgs, this creates a new CircleCI organization.
+         */
+        post: operations["createOrganization"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organization/{org-slug-or-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete an organization
+         * @description Delete an organization. This action will delete all projects including all build data for the organization.
+         */
+        delete: operations["deleteOrganization"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organization/{org-slug-or-id}/project": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create a new project
+         * @description Create a new project. Works for all organization types.
+         */
+        post: operations["createProject"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organization/{org-slug-or-id}/url-orb-allow-list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List the entries in the org's URL Orb allow-list
+         * @description List the entries in the org's URL Orb allow-list
+         */
+        get: operations["listURLOrbAllowListEntries"];
+        put?: never;
+        /**
+         * Create a new URL Orb allow-list entry
+         * @description Create a new URL Orb allow-list entry
+         */
+        post: operations["createURLOrbAllowListEntry"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organization/{org-slug-or-id}/url-orb-allow-list/{allow-list-entry-id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Remove an entry from the org's URL orb allow-list
+         * @description Remove an entry from the org's URL orb allow-list
+         */
+        delete: operations["removeURLOrbAllowListEntry"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/pipeline": {
         parameters: {
             query?: never;
@@ -439,6 +454,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/pipeline/{pipeline-id}/values": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get pipeline values for a pipeline
+         * @description Returns a map of pipeline values by pipeline ID. For more information see the [pipeline values reference page](https://circleci.com/docs/variables/#pipeline-values).
+         */
+        get: operations["getPipelineValuesById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/pipeline/{pipeline-id}/workflow": {
         parameters: {
             query?: never;
@@ -473,7 +508,11 @@ export interface paths {
         get: operations["getProjectBySlug"];
         put?: never;
         post?: never;
-        delete?: never;
+        /**
+         * Delete a project
+         * @description Deletes a project by project slug
+         */
+        delete: operations["deleteProjectBySlug"];
         options?: never;
         head?: never;
         patch?: never;
@@ -633,7 +672,7 @@ export interface paths {
         put?: never;
         /**
          * Trigger a new pipeline
-         * @description Not yet available to projects that use GitLab or GitHub App. Triggers a new pipeline on the project.
+         * @description **[This endpoint is superseded by the [new Trigger Pipeline API](#tag/Pipeline/operation/triggerPipelineRun), which supports all organization and pipeline types except GitLab.]** Triggers a new pipeline on the project. Does not support triggering pipelines integrated with GitLab or GitHub App.
          */
         post: operations["triggerPipeline"];
         delete?: never;
@@ -1139,6 +1178,98 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/context": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List contexts
+         * @description List all contexts for an owner.
+         */
+        get: operations["listContexts"];
+        put?: never;
+        /**
+         * Create a new context
+         * @description Creates a new context in the specified organization.
+         */
+        post: operations["createContext"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/context/{context_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a context
+         * @description Returns basic information about a context.
+         */
+        get: operations["getContext"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a context
+         * @description Delete a context by its ID. Will also delete all environment variables inside the context.
+         */
+        delete: operations["deleteContext"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/context/{context_id}/environment-variable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List environment variables
+         * @description List information about environment variables in a context, not including their values.
+         */
+        get: operations["listEnvironmentVariablesFromContext"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/context/{context_id}/environment-variable/{env_var_name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Add or update an environment variable
+         * @description Create or update an environment variable within a context. Returns information about the environment variable, not including its value.
+         */
+        put: operations["addEnvironmentVariableToContext"];
+        post?: never;
+        /**
+         * Remove an environment variable
+         * @description Delete an environment variable from a context.
+         */
+        delete: operations["deleteEnvironmentVariableFromContext"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/context/{context_id}/restrictions": {
         parameters: {
             query?: never;
@@ -1153,14 +1284,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * 🧪 Get context restrictions
-         * @description [__EXPERIMENTAL__] Gets a list of project restrictions associated with a context.
+         * Get context restrictions
+         * @description Gets a list of project and expression restrictions associated with a context.
          */
         get: operations["getContextRestrictions"];
         put?: never;
         /**
-         * 🧪 Create context restriction
-         * @description [__EXPERIMENTAL__] Creates project restriction on a context.
+         * Create context restriction
+         * @description Creates project or expression restriction on a context.
          */
         post: operations["createContextRestriction"];
         delete?: never;
@@ -1191,8 +1322,8 @@ export interface paths {
         put?: never;
         post?: never;
         /**
-         * 🧪 Delete context restriction
-         * @description [__EXPERIMENTAL__] Deletes a project restriction on a context.
+         * Delete context restriction
+         * @description Deletes a project, expression or group restriction from a context.
          */
         delete: operations["deleteContextRestriction"];
         options?: never;
@@ -1206,17 +1337,17 @@ export interface paths {
             header?: never;
             path: {
                 /**
-                 * @description The `provider` segment of a project or org slug, the first of the three. This may be a VCS. For projects that use GitLab or GitHub App, use `circleci`.
+                 * @description The first segment of the slash-separated project slug, as shown in Project Settings > Overview.
                  * @example gh
                  */
                 provider: components["parameters"]["provider"];
                 /**
-                 * @description The `organization` segment of a project or org slug, the second of the three. For GitHub OAuth or Bitbucket projects, this is the organization name. For projects that use GitLab or GitHub App, use the organization ID (found in Organization Settings).
+                 * @description The second segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the org name (e.g. `my-org`) or an ID (e.g. `43G3lM5RtfFE7v5sa4nWAU`).
                  * @example CircleCI-Public
                  */
                 organization: components["parameters"]["organization"];
                 /**
-                 * @description The `project` segment of a project slug, the third of the three. For GitHub OAuth or Bitbucket projects, this is the repository name. For projects that use GitLab or GitHub App, use the project ID (found in Project Settings).
+                 * @description The third segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the project name (e.g. `my-project`) or an ID (e.g. `44n9wujWcTnVZ2b5S8Fnat`).
                  * @example api-preview-docs
                  */
                 project: components["parameters"]["project"];
@@ -1226,10 +1357,10 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * 🧪 Create a project
-         * @description [__EXPERIMENTAL__]  Creates a new CircleCI project, and returns a list of the default advanced settings. Can only be called on a repo with a main branch and an existing config.yml file. Not yet available to projects that use GitLab or GitHub App.
+         * ⚠️ Create a project
+         * @description __[DEPRECATED] This endpoint is replaced by [organization/{org-slug-or-id}/project](https://circleci.com/docs/api/v2/index.html#tag/Project/operation/createProject) and documentation will be removed on August 1st, 2025.__ Creates a new CircleCI project, and returns a list of the default advanced settings. Can only be called on a repo with a main branch and an existing config.yml file. Not yet available to projects that use GitLab or GitHub App.
          */
-        post: operations["createProject"];
+        post: operations["createProject1"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1242,17 +1373,17 @@ export interface paths {
             header?: never;
             path: {
                 /**
-                 * @description The `provider` segment of a project or org slug, the first of the three. This may be a VCS. For projects that use GitLab or GitHub App, use `circleci`.
+                 * @description The first segment of the slash-separated project slug, as shown in Project Settings > Overview.
                  * @example gh
                  */
                 provider: components["parameters"]["provider"];
                 /**
-                 * @description The `organization` segment of a project or org slug, the second of the three. For GitHub OAuth or Bitbucket projects, this is the organization name. For projects that use GitLab or GitHub App, use the organization ID (found in Organization Settings).
+                 * @description The second segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the org name (e.g. `my-org`) or an ID (e.g. `43G3lM5RtfFE7v5sa4nWAU`).
                  * @example CircleCI-Public
                  */
                 organization: components["parameters"]["organization"];
                 /**
-                 * @description The `project` segment of a project slug, the third of the three. For GitHub OAuth or Bitbucket projects, this is the repository name. For projects that use GitLab or GitHub App, use the project ID (found in Project Settings).
+                 * @description The third segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the project name (e.g. `my-project`) or an ID (e.g. `44n9wujWcTnVZ2b5S8Fnat`).
                  * @example api-preview-docs
                  */
                 project: components["parameters"]["project"];
@@ -1274,6 +1405,71 @@ export interface paths {
          * @description [__EXPERIMENTAL__] Updates one or more of the advanced settings for a CircleCI project.
          */
         patch: operations["patchProjectSettings"];
+        trace?: never;
+    };
+    "/organizations/{org_id}/groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of an organization.
+                 * @example b9291e0d-a11e-41fb-8517-c545388b5953
+                 */
+                org_id: components["parameters"]["org_id"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Groups in an organization
+         * @description Get all the groups in an organization.
+         */
+        get: operations["getOrganizationGroups"];
+        put?: never;
+        /**
+         * Create Groups
+         * @description Create a new group under the organization.
+         */
+        post: operations["createOrganizationGroup"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organizations/{org_id}/groups/{group_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of an organization.
+                 * @example b9291e0d-a11e-41fb-8517-c545388b5953
+                 */
+                org_id: components["parameters"]["org_id"];
+                /**
+                 * @description An opaque identifier of a group.
+                 * @example 39f660db-f49b-417e-ad79-2769ba29faf7
+                 */
+                group_id: components["parameters"]["group_id"];
+            };
+            cookie?: never;
+        };
+        /**
+         * A group in an organization
+         * @description Get details for a group in an organization.
+         */
+        get: operations["getGroup"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a group
+         * @description Delete a group in an organization. This will remove all members from the group as well, and the subsequent role grants tied to the group.
+         */
+        delete: operations["deleteGroup"];
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/organizations/{org_id}/usage_export_job": {
@@ -1325,6 +1521,255 @@ export interface paths {
          * @description Gets a usage export for an organization.
          */
         get: operations["getUsageExport"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/project/{provider}/{organization}/{project}/pipeline/run": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * [Recommended] Trigger a new pipeline
+         * @description Trigger a pipeline given a pipeline definition ID. Supports all integrations except GitLab.
+         *
+         *     The slash-separated project slug is shown in Project Settings > Overview.
+         *
+         *     Depending on the organization type, the project slug may have a human-readable format (`vcs_type/org_name/project_name`)
+         *     or be an opaque string (e.g. `circleci/43G3lM5RtfFE7v5sa4nWAU/44n9wujWcTnVZ2b5S8Fnat`).
+         */
+        post: operations["triggerPipelineRun"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/pipeline-definitions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List pipeline definitions
+         * @description List all pipeline definitions for a given project. [Share feedback](https://circleci.canny.io/cloud-feature-requests/p/project-administration-apis) about our Project Administration APIs.
+         */
+        get: operations["listPipelineDefinitions"];
+        put?: never;
+        /**
+         * Create pipeline definition
+         * @description Create a pipeline definition for a given project. Currently only supported for pipeline definitions where `config_source.provider` is `github_app`. [Share feedback](https://circleci.canny.io/cloud-feature-requests/p/project-administration-apis) about our Project Administration APIs.
+         */
+        post: operations["createPipelineDefinition"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/pipeline-definitions/{pipeline_definition_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get pipeline definition
+         * @description Get details for a pipeline definition. Currently only supported for pipeline definitions where `config_source.provider` is `github_app` or `bitbucket_dc`. [Share feedback](https://circleci.canny.io/cloud-feature-requests/p/project-administration-apis) about our Project Administration APIs.
+         */
+        get: operations["getPipelineDefinition"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete pipeline definition
+         * @description Delete pipeline definition. Currently only supported for pipeline definitions where `config_source.provider` is `github_app` or `bitbucket_dc`. [Share feedback](https://circleci.canny.io/cloud-feature-requests/p/project-administration-apis) about our Project Administration APIs.
+         */
+        delete: operations["deletePipelineDefinition"];
+        options?: never;
+        head?: never;
+        /**
+         * Update pipeline definition
+         * @description Update pipeline definition. Currently only supported for pipeline definitions where `config_source.provider` is `github_app` or `bitbucket_dc`. [Share feedback](https://circleci.canny.io/cloud-feature-requests/p/project-administration-apis) about our Project Administration APIs.
+         */
+        patch: operations["updatePipelineDefinition"];
+        trace?: never;
+    };
+    "/projects/{project_id}/pipeline-definitions/{pipeline_definition_id}/triggers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List pipeline definition triggers
+         * @description List all triggers for a given pipeline definition. Currently only supported for pipeline definitions where `config_source.provider` is `github_app` or `bitbucket_dc`. [Share feedback](https://circleci.canny.io/cloud-feature-requests/p/project-administration-apis) about our Project Administration APIs.
+         */
+        get: operations["listPipelineDefinitionTriggers"];
+        put?: never;
+        /**
+         * Create trigger
+         * @description Create a trigger for a given pipeline definition. Currently only supported for pipeline definitions where `config_source.provider` is `github_app`. [Share feedback](https://circleci.canny.io/cloud-feature-requests/p/project-administration-apis) about our Project Administration APIs.
+         */
+        post: operations["createTrigger"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/triggers/{trigger_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get trigger
+         * @description Get details for a trigger. Currently only supported for triggers where `event_source.provider` is `github_app`, `bitbucket_dc` or `webhook`. [Share feedback](https://circleci.canny.io/cloud-feature-requests/p/project-administration-apis) about our Project Administration APIs.  Breaking change [upcoming on May 27, 2025](https://discuss.circleci.com/t/upcoming-changes-1-breaking-to-crud-trigger-v2-apis-may-27-2025/53314).
+         */
+        get: operations["getTrigger"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete trigger
+         * @description Delete a trigger. Currently only supported for triggers where `event_source.provider` is `github_app`, `bitbucket_dc` or `webhook`. [Share feedback](https://circleci.canny.io/cloud-feature-requests/p/project-administration-apis) about our Project Administration APIs.
+         */
+        delete: operations["deleteTrigger"];
+        options?: never;
+        head?: never;
+        /**
+         * Update trigger
+         * @description Update a trigger. Currently only supported for triggers where `event_source.provider` is `github_app`, `bitbucket_dc` or `webhook`. [Share feedback](https://circleci.canny.io/cloud-feature-requests/p/project-administration-apis) about our Project Administration APIs.
+         */
+        patch: operations["updateTrigger"];
+        trace?: never;
+    };
+    "/projects/{project_id}/rollback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rollback a project
+         * @description Performs a rollback operation by triggering a rollback pipeline.
+         */
+        post: operations["rollbackProject"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/deploy/environments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Environments
+         * @description Allows listing environments for a given organization ID.
+         */
+        get: operations["listEnvironments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/deploy/environments/{environment_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Environment
+         * @description Allows getting an environment for a given environment ID.
+         */
+        get: operations["getEnvironment"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/deploy/components": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Components
+         * @description Allows for listing of components for a given organization ID.
+         */
+        get: operations["listComponents"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/deploy/components/{component_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Component
+         * @description Get the details of a component by ID.
+         */
+        get: operations["getComponent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/deploy/components/{component_id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Component Versions
+         * @description List the versions for a component.
+         */
+        get: operations["listComponentVersions"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1418,6 +1863,90 @@ export interface components {
             reason: string;
             rule: string;
         };
+        group: {
+            /**
+             * Format: uuid
+             * @description Unique identifier for group
+             */
+            id?: string;
+            /** @description Name of group */
+            name?: string;
+            /** @description Description field on group */
+            description?: string;
+        };
+        groups: {
+            items?: components["schemas"]["group"][];
+            next_page_token?: string | null;
+            total_count?: number;
+        };
+        context_list: {
+            items: {
+                /**
+                 * Format: uuid
+                 * @description The unique ID of the context.
+                 */
+                id: string;
+                /** @description The user defined name of the context. */
+                name: string;
+                /**
+                 * Format: date-time
+                 * @description The date and time the context was created.
+                 * @example 2015-09-21T17:29:21.042Z
+                 */
+                created_at: string;
+            }[];
+            /** @description A token to pass as a `page-token` query parameter to return the next page of results. */
+            next_page_token: string | null;
+        };
+        context_created: {
+            /** @description The user defined name of the context. */
+            name: string;
+            owner: {
+                /**
+                 * Format: uuid
+                 * @description The unique ID of the owner of the context. Specify either this or slug.
+                 */
+                id: string;
+                /**
+                 * @description The type of the owner. Defaults to "organization". Accounts are only used as context owners in server.
+                 * @example organization
+                 * @enum {string}
+                 */
+                type?: "account" | "organization";
+            } | {
+                /** @description A string that represents an organization. Specify either this or id. Cannot be used for accounts. */
+                slug: string;
+                /**
+                 * @description The type of owner. Defaults to "organization". Accounts are only used as context owners in server and must be specified by an id instead of a slug.
+                 * @enum {string}
+                 */
+                type?: "organization";
+            };
+        };
+        /**
+         * MessageResponse
+         * @description message response
+         */
+        delete_context_response: {
+            /** @description A human-readable message */
+            message: string;
+        };
+        /** Context */
+        context: {
+            /**
+             * Format: uuid
+             * @description The unique ID of the context.
+             */
+            id: string;
+            /** @description The user defined name of the context. */
+            name: string;
+            /**
+             * Format: date-time
+             * @description The date and time the context was created.
+             * @example 2015-09-21T17:29:21.042Z
+             */
+            created_at: string;
+        };
         context_project_restrictions_list: {
             items?: {
                 /**
@@ -1450,12 +1979,75 @@ export interface components {
                  * @description Type of the restriction
                  * @enum {string}
                  */
-                restriction_type?: "project" | "expression";
+                restriction_type?: "project" | "expression" | "group";
                 /** @description Value used to evaluate the restriction */
                 restriction_value?: string;
             }[];
             /** @description Token that can be used to retrieve next page of results */
             next_page_token?: string | null;
+        };
+        env_var_list: {
+            items: {
+                /**
+                 * @description The name of the environment variable
+                 * @example POSTGRES_USER
+                 */
+                variable: string;
+                /**
+                 * Format: date-time
+                 * @description The date and time the environment variable was created.
+                 * @example 2015-09-21T17:29:21.042Z
+                 */
+                created_at: string;
+                /**
+                 * Format: date-time
+                 * @description The date and time the environment variable was updated
+                 * @example 2015-09-21T17:29:21.042Z
+                 */
+                updated_at: string;
+                /**
+                 * Format: uuid
+                 * @description ID of the context (UUID)
+                 */
+                context_id: string;
+            }[];
+            /** @description A token to pass as a `page-token` query parameter to return the next page of results. */
+            next_page_token: string | null;
+        };
+        /**
+         * MessageResponse
+         * @description message response
+         */
+        delete_env_var: {
+            /** @description A human-readable message */
+            message: string;
+        };
+        update_env_var: {
+            /**
+             * @description The name of the environment variable
+             * @example POSTGRES_USER
+             */
+            variable: string;
+            /**
+             * Format: date-time
+             * @description The date and time the environment variable was created.
+             * @example 2015-09-21T17:29:21.042Z
+             */
+            created_at: string;
+            /**
+             * Format: date-time
+             * @description The date and time the environment variable was updated
+             * @example 2015-09-21T17:29:21.042Z
+             */
+            updated_at: string;
+            /**
+             * Format: uuid
+             * @description ID of the context (UUID)
+             */
+            context_id: string;
+        } | {
+            /** @description A human-readable message */
+            message: string;
         };
         project_settings: {
             advanced?: {
@@ -1506,7 +2098,7 @@ export interface components {
              * @description Type of the restriction
              * @enum {string}
              */
-            restriction_type?: "project" | "expression";
+            restriction_type?: "project" | "expression" | "group";
             /** @description Value used to evaluate the restriction */
             restriction_value?: string;
         };
@@ -1534,6 +2126,601 @@ export interface components {
             /** @description A list of pre signed urls that the client can use to download the results of a Usage Export. */
             download_urls: string[];
             error_reason?: string;
+        };
+        triggerPipelineRequest: {
+            /**
+             * Format: uuid
+             * @description The unique id for the pipeline definition. This can be found in the page Project Settings > Pipelines.
+             * @example 2338d0ae-5541-4bbf-88a2-55e9f7281f80
+             */
+            definition_id?: string;
+            /** @example {
+             *       "branch": "main"
+             *     } */
+            config?: {
+                /**
+                 * @description The branch that should be used to fetch the config file.
+                 *     Note that branch and tag are mutually exclusive.
+                 *     To trigger a pipeline for a PR by number use pull/<number>/head for the PR ref or pull/<number>/merge for the merge ref (GitHub only)
+                 *
+                 * @example main
+                 */
+                branch?: string;
+                /**
+                 * @description The tag that should be used to fetch the config file.
+                 *     The commit that this tag points to is used for the pipeline.
+                 *     Note that branch and tag are mutually exclusive.
+                 *
+                 * @example v2
+                 */
+                tag?: string;
+            };
+            /** @example {
+             *       "tag": "v2"
+             *     } */
+            checkout?: {
+                /**
+                 * @description The branch that should be used to check out code on a checkout step.
+                 *     Note that branch and tag are mutually exclusive.
+                 *     To trigger a pipeline for a PR by number use pull/<number>/head for the PR ref or pull/<number>/merge for the merge ref (GitHub only)
+                 *
+                 * @example main
+                 */
+                branch?: string;
+                /**
+                 * @description The tag that should be used to check out code on a checkout step.
+                 *     The commit that this tag points to is used for the pipeline. Note that branch and tag are mutually exclusive.
+                 *
+                 * @example v2
+                 */
+                tag?: string;
+            };
+            /**
+             * @description An object containing pipeline parameters and their values.
+             *     Pipeline parameters have the following size limits: 100 max entries, 128 maximum key length, 512 maximum value length.
+             *
+             * @example {
+             *       "example_param": "my value",
+             *       "example_param2": true,
+             *       "example_param3": 3
+             *     }
+             */
+            parameters?: {
+                [key: string]: unknown;
+            };
+        };
+        pipelineNotTriggeredResponse: {
+            /**
+             * @description A message indicating the reason why a pipeline was not triggered
+             * @example Ignoring pipeline due to CI skip in the commit
+             */
+            message?: string;
+        };
+        pipelineTriggeredResponse: {
+            /** @enum {string} */
+            state?: "created" | "errored" | "setup-pending" | "setup" | "pending";
+            /** Format: date-time */
+            created_at?: string;
+            /** @example 25 */
+            number?: number;
+            /** Format: uuid */
+            id?: string;
+        };
+        pipelineDefinition: {
+            /**
+             * Format: uuid
+             * @description The unique ID of the pipeline definition.
+             */
+            id?: string;
+            /**
+             * @description The name of the pipeline definition.
+             * @example some pipeline
+             */
+            name?: string;
+            /**
+             * @description The description of the pipeline definition.
+             * @example some pipeline description
+             */
+            description?: string;
+            /**
+             * Format: date-time
+             * @description The date and time the pipeline definition was created.
+             */
+            created_at?: string;
+            /** @description The resource that stores the CircleCI config YAML used for this pipeline definition. */
+            config_source?: {
+                /**
+                 * @description The integration provider for this resource.
+                 * @example github_app
+                 */
+                provider?: string;
+                repo?: components["schemas"]["pipelineDefinitionRepo"];
+                /**
+                 * @description Path to CircleCI config YAML file to use for this pipeline definition.
+                 * @example .circleci/some-pipeline.yml
+                 */
+                file_path?: string;
+            };
+            /** @description The resource to be used when running the `checkout` command. */
+            checkout_source?: {
+                /**
+                 * @description The integration provider for this resource.
+                 * @example github_app
+                 */
+                provider?: string;
+                repo?: components["schemas"]["pipelineDefinitionRepo"];
+            };
+        };
+        pipelineDefinitionRepo: {
+            /**
+             * @description The fully-qualified name of the repository.
+             * @example some-org/some-repo-name
+             */
+            full_name?: string;
+            /**
+             * @description External identifier for the repository, as defined by the respective version control provider.
+             * @example some-repo-id
+             */
+            external_id?: string;
+        };
+        pipelineDefinitionList: {
+            items?: components["schemas"]["pipelineDefinition"][];
+        };
+        createPipelineDefinitionRequest: {
+            /**
+             * @description The name of the pipeline definition.
+             * @example Some pipeline name
+             */
+            name: string;
+            /**
+             * @description The description of the pipeline definition.
+             * @example Some pipeline description
+             */
+            description?: string;
+            config_source: {
+                /**
+                 * @description The integration provider for this resource. Currently `github_app` is the only supported external provider.
+                 * @example github_app
+                 * @enum {string}
+                 */
+                provider: "github_app";
+                repo: {
+                    /**
+                     * @description External identifier for the repository, as defined by the respective version control provider.
+                     * @example some-repo-id
+                     */
+                    external_id: string;
+                };
+                /**
+                 * @description Path to CircleCI config YAML file to use for this pipeline definition.
+                 * @example .circleci/some-pipeline.yml
+                 */
+                file_path: string;
+            } | {
+                /**
+                 * @description The integration provider for this resource.
+                 * @enum {string}
+                 */
+                provider: "circleci";
+                /**
+                 * @description Path to CircleCI config YAML file to use for this pipeline definition.
+                 * @example .circleci/some-pipeline.yml
+                 */
+                file_path: string;
+            };
+            /** @description The resource to be used when running the `checkout` command. */
+            checkout_source: {
+                /**
+                 * @description The integration provider for this resource. Currently `github_app` is the only supported value.
+                 * @example github_app
+                 * @enum {string}
+                 */
+                provider: "github_app";
+                repo: {
+                    /**
+                     * @description External identifier for the repository, as defined by the respective version control provider.
+                     * @example some-repo-id
+                     */
+                    external_id: string;
+                };
+            };
+        };
+        updatePipelineDefinitionRequest: {
+            /**
+             * @description The name of the pipeline definition.
+             * @example Some pipeline name
+             */
+            name?: string;
+            /**
+             * @description The description of the pipeline definition.
+             * @example Some pipeline description
+             */
+            description?: string;
+            /** @description The resource that stores the CircleCI config YAML used for this pipeline definition. */
+            config_source?: {
+                /**
+                 * @description Path to CircleCI config YAML file to use for this pipeline definition.
+                 * @example .circleci/some-pipeline.yml
+                 */
+                file_path?: string;
+            };
+            /** @description The resource to be used when running the `checkout` command. */
+            checkout_source?: {
+                /**
+                 * @description The integration provider for this resource. Currently `github_app` is the only supported value.
+                 * @example github_app
+                 */
+                provider?: string;
+                repo?: {
+                    /**
+                     * @description External identifier for the repository, as defined by the respective version control provider.
+                     * @example some-repo-id
+                     */
+                    external_id?: string;
+                };
+            };
+        };
+        pipelineDefinitionDeleted: {
+            /** @description Response message */
+            message?: string;
+        };
+        trigger: {
+            /**
+             * Format: uuid
+             * @description The unique ID of the trigger.
+             */
+            id?: string;
+            /**
+             * @description The name of the event that will trigger the pipeline.
+             * @example some event name
+             */
+            event_name?: string;
+            /**
+             * Format: date-time
+             * @description The date and time the trigger was created.
+             */
+            created_at?: string;
+            /** @description The source of events to use for this trigger. Will contain either a `repo` or `webhook` object depending on the `provider`. (The `github_app` and `github_oauth` providers imply a `repo` and `webhook` implies a `webhook`.) */
+            event_source?: {
+                /**
+                 * @description The integration provider for this resource. Currently `github_app`, `github_oauth`, and `webhook` are the only supported values.
+                 * @example github_app
+                 */
+                provider?: string;
+                /** @description Information pertaining to the repository used as a source of events for this trigger, if applicable. */
+                repo?: {
+                    /**
+                     * @description The fully-qualified name of the repository.
+                     * @example some-org/some-repo-name
+                     */
+                    full_name?: string;
+                    /**
+                     * @description External identifier for the repository, as defined by the respective version control provider.
+                     * @example some-repo-id
+                     */
+                    external_id?: string;
+                };
+                /** @description Information pertaining to the custom webhook used as a source of events for this trigger, if applicable. */
+                webhook?: {
+                    /**
+                     * @description The URL to use when triggering this webhook.
+                     * @example https://some-webhook.invalid/some-endpoint?secret=some-secret
+                     */
+                    url?: string;
+                    /**
+                     * @description The name of the webhook sender..
+                     * @example datadog
+                     */
+                    sender?: string;
+                };
+            };
+            event_preset?: components["schemas"]["trigger_event_preset"];
+            /**
+             * @description The ref to use when checking out code for pipeline runs created from this trigger. If empty, the ref provided in the trigger event is used.
+             * @example some-checkout-ref
+             */
+            checkout_ref?: string;
+            /**
+             * @description The ref to use when fetching config for pipeline runs created from this trigger. If empty, the ref provided in the trigger event is used.
+             * @example some-config-ref
+             */
+            config_ref?: string;
+            /**
+             * @description Whether the trigger is disabled. Not supported for pipeline definitions where `config_source.provider` is `github_oauth`.
+             * @example false
+             */
+            disabled?: boolean;
+        };
+        /**
+         * @description The name of the event preset to use when filtering events for this trigger. Only applicable when `event_source.provider` is `github_app`.
+         * @example all-pushes
+         * @enum {string}
+         */
+        trigger_event_preset: "all-pushes" | "only-tags" | "default-branch-pushes" | "only-build-prs" | "only-open-prs" | "only-labeled-prs" | "only-merged-prs" | "only-ready-for-review-prs" | "only-branch-delete" | "only-build-pushes-to-non-draft-prs" | "only-merged-or-closed-prs";
+        triggerList: {
+            items?: components["schemas"]["trigger"][];
+        };
+        createTriggerRequest: {
+            /** @description The source of events to use for this trigger. The `repo` object must be specified when `provider` is `github_app`, and the `webhook` object may only be specified when `provider` is `webhook`. */
+            event_source: {
+                /**
+                 * @description The integration provider for this resource. Currently `github_app`, `github_oauth`, and `webhook` are the only supported values.
+                 * @example github_app
+                 */
+                provider: string;
+                /** @description Information pertaining to the repository used as a source of events for this trigger, if applicable. */
+                repo?: {
+                    /**
+                     * @description External identifier for the repository, as defined by the respective version control provider.
+                     * @example some-repo-id
+                     */
+                    external_id: string;
+                };
+                /** @description Information pertaining to the custom webhook being used as a source of events for this trigger, if applicable. */
+                webhook?: {
+                    /**
+                     * @description The sender of the webhook.
+                     * @example some-webhook-sender
+                     */
+                    sender?: string;
+                };
+            };
+            event_preset?: components["schemas"]["trigger_event_preset"];
+            /**
+             * @description The ref to use when checking out code for pipeline runs created from this trigger. Always required when `event_source.provider` is `webhook`. When `event_source.provider` is `github_app`, only expected if the event source repository (identified by `event_source.provider.repo.external_id`) is different to the checkout source repository of the associated Pipeline Definition. Otherwise, must be omitted.
+             * @example some-checkout-ref
+             */
+            checkout_ref?: string;
+            /**
+             * @description The ref to use when fetching config for pipeline runs created from this trigger. Always required when `event_source.provider` is `webhook`. When `event_source.provider` is `github_app`, only expected if the event source repository (identified by `event_source.provider.repo.external_id`) is different to the config source repository of the associated Pipeline Definition. Otherwise, must be omitted.
+             * @example some-config-ref
+             */
+            config_ref?: string;
+            /**
+             * @description The name of the triggering event. This should only be set for triggers where `provider` is `webhook`.
+             * @example some-event-name
+             */
+            event_name?: string;
+            /**
+             * @description Whether the trigger should be disabled upon creation. Not supported for pipeline definitions where `config_source.provider` is `github_oauth`.
+             * @example false
+             */
+            disabled?: boolean;
+        };
+        updateTriggerRequest: {
+            event_preset?: components["schemas"]["trigger_event_preset"];
+            /**
+             * @description The ref to use when checking out code for pipeline runs created from this trigger.
+             * @example some-checkout-ref
+             */
+            checkout_ref?: string;
+            /**
+             * @description The ref to use when fetching config for pipeline runs created from this trigger.
+             * @example some-config-ref
+             */
+            config_ref?: string;
+            /**
+             * @description The name of the triggering event. This can only be set for triggers where `provider` is `webhook`.
+             * @example some event name
+             */
+            event_name?: string;
+            /**
+             * @description A flag indicating whether the trigger is disabled or not. This can only be set for triggers where `provider` is `webhook`.
+             * @example false
+             */
+            disabled?: boolean;
+            event_source?: {
+                webhook?: {
+                    /**
+                     * @description The sender of the webhook. This can only be set for triggers where `provider` is `webhook`.
+                     * @example some sender
+                     */
+                    sender?: string;
+                };
+            };
+        };
+        triggerDeleted: {
+            /** @description Response message */
+            message?: string;
+        };
+        rollbackProjectRequest: {
+            /**
+             * @description The component name
+             * @example frontend
+             */
+            component_name: string;
+            /**
+             * @description The current version
+             * @example 1.0.0
+             */
+            current_version: string;
+            /**
+             * @description The environment name
+             * @example production
+             */
+            environment_name: string;
+            /**
+             * @description The namespace
+             * @example default
+             */
+            namespace?: string;
+            /**
+             * @description The extra parameters for the rollback pipeline
+             * @example {
+             *       "param1": "value1",
+             *       "param2": "value2"
+             *     }
+             */
+            parameters?: {
+                [key: string]: unknown;
+            };
+            /**
+             * @description The reason for the rollback
+             * @example The component is down
+             */
+            reason?: string;
+            /**
+             * @description The target version
+             * @example 1.0.1
+             */
+            target_version: string;
+        };
+        rollbackProjectResponse: {
+            /**
+             * Format: uuid
+             * @description The ID of the rollback pipeline or the command created to handle the rollback
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id?: string;
+            /**
+             * @description The type of the rollback
+             * @example PIPELINE
+             */
+            rollback_type?: string;
+        };
+        label: {
+            /**
+             * @description The key of the label
+             * @example env
+             */
+            key?: string;
+            /**
+             * @description The value of the label
+             * @example prod
+             */
+            value?: string;
+        };
+        component: {
+            /**
+             * Format: uuid
+             * @description The component ID
+             * @example 123e4127-e89b-12d3-a456-426123417400
+             */
+            id?: string;
+            /**
+             * @description The component name
+             * @example service-a
+             */
+            name?: string;
+            /**
+             * Format: uuid
+             * @description The project ID of the component
+             * @example 123e4127-e89b-12d3-a456-426123417400
+             */
+            project_id?: string;
+            /** @description The labels associated with the component */
+            labels?: components["schemas"]["label"][];
+            /**
+             * @description The number of releases for this component
+             * @example 1
+             */
+            release_count?: number;
+            /**
+             * Format: date-time
+             * @description The time when the component was created
+             */
+            created_at?: string;
+            /**
+             * Format: date-time
+             * @description The time when the component was updated
+             */
+            updated_at?: string;
+        };
+        paginatedComponentList: {
+            items?: components["schemas"]["component"][];
+            /** @description The pagination token to use when fetching the next page in this result set. */
+            next_page_token?: string | null;
+        };
+        version: {
+            /**
+             * @description The version name
+             * @example 1.0.0
+             */
+            name?: string;
+            /**
+             * Format: uuid
+             * @description The ID of the environment in which the version has been deployed
+             * @example 123e4127-e89b-12d3-a456-426123417400
+             */
+            environment_id?: string;
+            /**
+             * @description The namespace in which the version was deployed
+             * @example default
+             */
+            namespace?: string;
+            /**
+             * @description Whether the version is live or not
+             * @example true
+             */
+            is_live?: boolean;
+            /**
+             * Format: uuid
+             * @description The ID of the pipeline that deployed the version
+             * @example cc54a110-d03f-4916-96fc-ff36a1221ed7
+             */
+            pipeline_id?: string;
+            /**
+             * Format: uuid
+             * @description The ID of the CircleCI workflow that deployed the version
+             * @example 5034460f-c7c4-4c43-9457-de07e2029e7b
+             */
+            workflow_id?: string;
+            /**
+             * Format: uuid
+             * @description The ID of the CircleCI job that deployed the version
+             * @example f7e18b53-db27-4706-ad77-b16dc1e6fc53
+             */
+            job_id?: string;
+            /**
+             * @description The number of the CircleCI job that deployed the version
+             * @example 123
+             */
+            job_number?: number;
+            /**
+             * Format: date-time
+             * @description The time at which the version was last deployed
+             */
+            last_deployed_at?: string;
+        };
+        paginatedComponentVersionList: {
+            items?: components["schemas"]["version"][];
+            /** @description The pagination token to use when fetching the next page in this result set. */
+            next_page_token?: string | null;
+        };
+        environment: {
+            /**
+             * Format: date-time
+             * @description The time when the environment was created
+             */
+            created_at?: string;
+            /**
+             * @description Short description given to the environment
+             * @example some description
+             */
+            description?: string;
+            /**
+             * Format: uuid
+             * @description The environment ID
+             * @example 123e4127-e89b-12d3-a456-426123417400
+             */
+            id?: string;
+            /** @description The labels associated to the environment */
+            labels?: components["schemas"]["label"][];
+            /**
+             * @description The environment name
+             * @example prod-app
+             */
+            name?: string;
+            /**
+             * Format: date-time
+             * @description The time when the environment was updated
+             */
+            updated_at?: string;
+        };
+        paginatedEnvironmentList: {
+            items?: components["schemas"]["environment"][];
+            /** @description The pagination token to use when fetching the next page in this result set. */
+            next_page_token?: string | null;
         };
     };
     responses: {
@@ -1575,19 +2762,6 @@ export interface components {
                 };
             };
         };
-        /** @description The request is unauthenticated
-         *      */
-        Unauthenticated: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /** @example unauthenticated */
-                    error: string;
-                };
-            };
-        };
         /** @description The request is unauthorized
          *      */
         Unauthorized: {
@@ -1613,20 +2787,44 @@ export interface components {
                 };
             };
         };
-        /** @description Context ID provided is invalid. */
-        "400_invalid_context_id": {
+        /** @description Unexpected request body provided. */
+        "400_unexpected_request_body": {
             headers: {
                 [name: string]: unknown;
             };
             content: {
                 "application/json": {
-                    /** @default context_id is invalid. */
+                    /** @default Unexpected request body provided. */
                     message: string;
                 };
             };
         };
-        /** @description Credentials provided are invalid. */
-        "401_invalid_token": {
+        /** @description None or insufficient credentials provided. */
+        "403_permission_denied": {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @default Permission denied. */
+                    message: string;
+                };
+            };
+        };
+        /** @description Internal server error. */
+        "500_internal_server_error": {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @default Internal server error. */
+                    message: string;
+                };
+            };
+        };
+        /** @description Entity not found. */
+        "404_entity_not_found": {
             headers: {
                 [name: string]: unknown;
             };
@@ -1636,8 +2834,8 @@ export interface components {
                 };
             };
         };
-        /** @description Entity not found. */
-        "404_entity_not_found": {
+        /** @description Credentials provided are invalid. */
+        "401_invalid_token": {
             headers: {
                 [name: string]: unknown;
             };
@@ -1659,14 +2857,14 @@ export interface components {
                 };
             };
         };
-        /** @description Internal server error. */
-        "500_internal_server_error": {
+        /** @description Context ID provided is invalid. */
+        "400_invalid_context_id": {
             headers: {
                 [name: string]: unknown;
             };
             content: {
                 "application/json": {
-                    /** @default Internal server error. */
+                    /** @default context_id is invalid. */
                     message: string;
                 };
             };
@@ -1679,30 +2877,6 @@ export interface components {
             content: {
                 "application/json": {
                     /** @default restriction_id is invalid. */
-                    message: string;
-                };
-            };
-        };
-        /** @description Unexpected request body provided. */
-        "400_unexpected_request_body": {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /** @default Unexpected request body provided. */
-                    message: string;
-                };
-            };
-        };
-        /** @description None or insufficient credentials provided. */
-        "403_permission_denied": {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": {
-                    /** @default Permission denied. */
                     message: string;
                 };
             };
@@ -1743,14 +2917,15 @@ export interface components {
                 };
             };
         };
-        /** @description Orb ID provided is invalid. */
-        "400_invalid_orb_id": {
+        /** @description A conflict has occurred while attempting to create the resource.
+         *      */
+        "409_entity_conflict": {
             headers: {
                 [name: string]: unknown;
             };
             content: {
                 "application/json": {
-                    /** @default orb_id is invalid. */
+                    /** @default Conflict creating entity. */
                     message: string;
                 };
             };
@@ -1765,89 +2940,107 @@ export interface components {
         DecisionID: string;
         OwnerID: string;
         /**
+         * @description An opaque identifier of an organization.
+         * @example b9291e0d-a11e-41fb-8517-c545388b5953
+         */
+        org_id: string;
+        /**
+         * @description An opaque identifier of a project.
+         * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+         */
+        project_id: string;
+        /** @description The unique ID of the owner of the context. This is the organization ID. Specify either owner/organization ID or the owner/organization slug. Find the organization ID and slug in the CircleCI web app (Organization Settings > Overview). Owner/organization slug is not supported for CircleCI server. */
+        owner_id_query: string;
+        /** @description A string that represents an organization. This is the organization slug. Specify either this or organization/owner ID. Find the organization ID and slug in the CircleCI web app (Organization Settings > Overview). Owner/organization slug is not supported for CircleCI server. */
+        owner_slug_query: string;
+        /** @description The type of the owner. Defaults to "organization". Use "account" if you are using CircleCI server. */
+        owner_type_query: "account" | "organization";
+        /** @description A token to specify which page of results to fetch. */
+        page_token: string;
+        /**
          * @description An opaque identifier of a context.
          * @example be8bb2e3-c3d6-4098-89f4-572ff976ba9a
          */
         context_id: string;
+        /**
+         * @description The name of the environment variable.
+         * @example POSTGRES_USER
+         */
+        env_var_name: string;
         /**
          * @description An opaque identifier of a context restriction.
          * @example 1c23d2cb-07b1-4a28-8af3-e369732050ed
          */
         restriction_id: string;
         /**
-         * @description The `provider` segment of a project or org slug, the first of the three. This may be a VCS. For projects that use GitLab or GitHub App, use `circleci`.
+         * @description The first segment of the slash-separated project slug, as shown in Project Settings > Overview.
          * @example gh
          */
-        provider: string;
+        providerNoGitlab: "github" | "gh" | "bitbucket" | "bb" | "circleci";
         /**
-         * @description The `organization` segment of a project or org slug, the second of the three. For GitHub OAuth or Bitbucket projects, this is the organization name. For projects that use GitLab or GitHub App, use the organization ID (found in Organization Settings).
+         * @description The second segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the org name (e.g. `my-org`) or an ID (e.g. `43G3lM5RtfFE7v5sa4nWAU`).
          * @example CircleCI-Public
          */
         organization: string;
         /**
-         * @description The `project` segment of a project slug, the third of the three. For GitHub OAuth or Bitbucket projects, this is the repository name. For projects that use GitLab or GitHub App, use the project ID (found in Project Settings).
+         * @description The third segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the project name (e.g. `my-project`) or an ID (e.g. `44n9wujWcTnVZ2b5S8Fnat`).
          * @example api-preview-docs
          */
         project: string;
         /**
-         * @description An opaque identifier of an organization.
-         * @example b9291e0d-a11e-41fb-8517-c545388b5953
+         * @description An opaque identifier of a pipeline definition.
+         * @example 6cb29b00-8e02-4357-8bc0-313983bf1f46
          */
-        org_id: string;
+        pipeline_definition_id: string;
         /**
-         * @description An opaque identifier of a user.
-         * @example a68942a8-c217-4d92-96e5-3b47f9a2f0d9
+         * @description An opaque identifier of a trigger.
+         * @example bbea3a3d-4686-48b6-8d2d-2a14ace3913c
          */
-        user_id: string;
+        trigger_id: string;
+        /**
+         * @description The first segment of the slash-separated project slug, as shown in Project Settings > Overview.
+         * @example gh
+         */
+        provider: "github" | "gh" | "bitbucket" | "bb" | "circleci";
         /** @description The number of results per page. */
         limit: number;
-        /** @description Specify what page of results to fetch. */
-        next_page_token: string;
         /**
          * @description An opaque identifier of a group.
          * @example 39f660db-f49b-417e-ad79-2769ba29faf7
          */
         group_id: string;
         /**
-         * @description An opaque identifier of a project.
-         * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
-         */
-        project_id: string;
-        /**
          * @description An opaque identifier of a usage export job.
          * @example e8235eed-f121-4ae3-9c72-2719d6572818
          */
         usage_export_job_id: string;
         /**
-         * @description The namespace that the Orb belongs to.
-         * @example circleci
+         * @description An opaque identifier of an organization used in query parameters.
+         * @example b9291e0d-a11e-41fb-8517-c545388b5953
          */
-        namespace: string;
+        org_id_query: string;
+        /** @description The number of results per page. */
+        page_size: number;
         /**
-         * @description The name of the requested Orb.
-         * @example node
+         * @description An opaque identifier of an environment.
+         * @example 1c23d2cb-07b1-4a28-8af3-e369732050ed
          */
-        name: string;
+        environment_id: string;
         /**
-         * @description An opaque identifier of an orb.
-         * @example d8a1f419-e207-40f5-8b31-cbc6486b45d8
+         * @description An opaque identifier of an project used in query parameters.
+         * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
          */
-        orb_id: string;
+        project_id_query: string;
         /**
-         * @description The specific version of an Orb.
-         * @example 3.1.2
+         * @description An opaque identifier of a component.
+         * @example b9291e0d-a11e-41fb-8517-c545388b5953
          */
-        version: string;
+        component_id: string;
         /**
-         * @description The namespace that the Orb belongs to.
-         * @example circleci
+         * @description An opaque identifier of an environment used in query parameters.
+         * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
          */
-        namespace_path: string;
-        /**
-         * @description The name of the requested Orb.
-         * @example node
-         */
-        name_path: string;
+        environment_id_query: string;
     };
     requestBodies: never;
     headers: never;
@@ -1855,403 +3048,6 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    listContexts: {
-        parameters: {
-            query?: {
-                /** @description The unique ID of the owner of the context. Specify either this or owner-slug. */
-                "owner-id"?: string;
-                /** @description A string that represents an organization. Specify either this or owner-id. Cannot be used for accounts. */
-                "owner-slug"?: string;
-                /** @description The type of the owner. Defaults to "organization". Accounts are only used as context owners in server. */
-                "owner-type"?: "account" | "organization";
-                /** @description A token to retrieve the next page of results. */
-                "page-token"?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description A paginated list of contexts */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        items: {
-                            /**
-                             * Format: uuid
-                             * @description The unique ID of the context.
-                             */
-                            id: string;
-                            /** @description The user defined name of the context. */
-                            name: string;
-                            /**
-                             * Format: date-time
-                             * @description The date and time the context was created.
-                             * @example 2015-09-21T17:29:21.042Z
-                             */
-                            created_at: string;
-                        }[];
-                        /** @description A token to pass as a `page-token` query parameter to return the next page of results. */
-                        next_page_token: string;
-                    };
-                };
-            };
-            /** @description Error response. */
-            default: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        message?: string;
-                    };
-                };
-            };
-        };
-    };
-    createContext: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": {
-                    /** @description The user defined name of the context. */
-                    name: string;
-                    owner: {
-                        /**
-                         * Format: uuid
-                         * @description The unique ID of the owner of the context. Specify either this or slug.
-                         */
-                        id: string;
-                        /**
-                         * @description The type of the owner. Defaults to "organization". Accounts are only used as context owners in server.
-                         * @example organization
-                         * @enum {string}
-                         */
-                        type?: "account" | "organization";
-                    } | {
-                        /** @description A string that represents an organization. Specify either this or id. Cannot be used for accounts. */
-                        slug: string;
-                        /**
-                         * @description The type of owner. Defaults to "organization". Accounts are only used as context owners in server and must be specified by an id instead of a slug.
-                         * @enum {string}
-                         */
-                        type?: "organization";
-                    };
-                };
-            };
-        };
-        responses: {
-            /** @description The new context */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /**
-                         * Format: uuid
-                         * @description The unique ID of the context.
-                         */
-                        id: string;
-                        /** @description The user defined name of the context. */
-                        name: string;
-                        /**
-                         * Format: date-time
-                         * @description The date and time the context was created.
-                         * @example 2015-09-21T17:29:21.042Z
-                         */
-                        created_at: string;
-                    };
-                };
-            };
-            /** @description Error response. */
-            default: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        message?: string;
-                    };
-                };
-            };
-        };
-    };
-    getContext: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description ID of the context (UUID) */
-                "context-id": string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description The context */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /**
-                         * Format: uuid
-                         * @description The unique ID of the context.
-                         */
-                        id: string;
-                        /** @description The user defined name of the context. */
-                        name: string;
-                        /**
-                         * Format: date-time
-                         * @description The date and time the context was created.
-                         * @example 2015-09-21T17:29:21.042Z
-                         */
-                        created_at: string;
-                    };
-                };
-            };
-            /** @description Error response. */
-            default: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        message?: string;
-                    };
-                };
-            };
-        };
-    };
-    deleteContext: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description ID of the context (UUID) */
-                "context-id": string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description A confirmation message */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @description A human-readable message */
-                        message: string;
-                    };
-                };
-            };
-            /** @description Error response. */
-            default: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        message?: string;
-                    };
-                };
-            };
-        };
-    };
-    listEnvironmentVariablesFromContext: {
-        parameters: {
-            query?: {
-                /** @description A token to retrieve the next page of results. */
-                "page-token"?: string;
-            };
-            header?: never;
-            path: {
-                /** @description ID of the context (UUID) */
-                "context-id": string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description A paginated list of environment variables */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        items: {
-                            /**
-                             * @description The name of the environment variable
-                             * @example POSTGRES_USER
-                             */
-                            variable: string;
-                            /**
-                             * Format: date-time
-                             * @description The date and time the environment variable was created.
-                             * @example 2015-09-21T17:29:21.042Z
-                             */
-                            created_at: string;
-                            /**
-                             * Format: date-time
-                             * @description The date and time the environment variable was updated
-                             * @example 2015-09-21T17:29:21.042Z
-                             */
-                            updated_at: string;
-                            /**
-                             * Format: uuid
-                             * @description ID of the context (UUID)
-                             */
-                            context_id: string;
-                        }[];
-                        /** @description A token to pass as a `page-token` query parameter to return the next page of results. */
-                        next_page_token: string;
-                    };
-                };
-            };
-            /** @description Error response. */
-            default: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        message?: string;
-                    };
-                };
-            };
-        };
-    };
-    addEnvironmentVariableToContext: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description ID of the context (UUID) */
-                "context-id": string;
-                /**
-                 * @description The name of the environment variable
-                 * @example POSTGRES_USER
-                 */
-                "env-var-name": string;
-            };
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": {
-                    /**
-                     * @description The value of the environment variable
-                     * @example some-secret-value
-                     */
-                    value: string;
-                };
-            };
-        };
-        responses: {
-            /** @description The new environment variable */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /**
-                         * @description The name of the environment variable
-                         * @example POSTGRES_USER
-                         */
-                        variable: string;
-                        /**
-                         * Format: date-time
-                         * @description The date and time the environment variable was created.
-                         * @example 2015-09-21T17:29:21.042Z
-                         */
-                        created_at: string;
-                        /**
-                         * Format: date-time
-                         * @description The date and time the environment variable was updated
-                         * @example 2015-09-21T17:29:21.042Z
-                         */
-                        updated_at: string;
-                        /**
-                         * Format: uuid
-                         * @description ID of the context (UUID)
-                         */
-                        context_id: string;
-                    } | {
-                        /** @description A human-readable message */
-                        message: string;
-                    };
-                };
-            };
-            /** @description Error response. */
-            default: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        message?: string;
-                    };
-                };
-            };
-        };
-    };
-    deleteEnvironmentVariableFromContext: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /**
-                 * @description The name of the environment variable
-                 * @example POSTGRES_USER
-                 */
-                "env-var-name": string;
-                /** @description ID of the context (UUID) */
-                "context-id": string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description A confirmation message */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @description A human-readable message */
-                        message: string;
-                    };
-                };
-            };
-            /** @description Error response. */
-            default: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        message?: string;
-                    };
-                };
-            };
-        };
-    };
     getProjectWorkflowsPageData: {
         parameters: {
             query?: {
@@ -3744,6 +4540,8 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
+                        /** @description URL to the user's avatar on the VCS */
+                        avatar_url: string;
                         /**
                          * Format: uuid
                          * @description The unique ID of the user.
@@ -3817,6 +4615,377 @@ export interface operations {
             };
         };
     };
+    createOrganization: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** @description The name of the organization. */
+                    name: string;
+                    /**
+                     * @description The version control system type for the organization.
+                     * @example github
+                     * @enum {string}
+                     */
+                    vcs_type: "github" | "bitbucket" | "circleci";
+                };
+            };
+        };
+        responses: {
+            /** @description The newly created organization */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description The unique ID of the organization. */
+                        id: string;
+                        /** @description The name of the organization. */
+                        name: string;
+                        /** @description Org slug in the form `vcs-slug/org-name`. For projects that use GitLab or GitHub App, use `circleci` as the `vcs-slug` and replace the `org-name` with the organization ID (found in Organization Settings). */
+                        slug: string;
+                        /**
+                         * @description The version control system type for the organization.
+                         * @example github
+                         * @enum {string}
+                         */
+                        vcs_type: "github" | "bitbucket" | "circleci";
+                    };
+                };
+            };
+            /** @description Error response. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message?: string;
+                    };
+                };
+            };
+        };
+    };
+    deleteOrganization: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description Org UUID or slug in the form `vcs-slug/org-name`. For projects that use GitLab or GitHub App, use `circleci` as the `vcs-slug` and replace the `org-name` with the organization ID (found in Organization Settings).
+                 * @example gh/CircleCI-Public
+                 */
+                "org-slug-or-id": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A confirmation message. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description A human-readable message */
+                        message: string;
+                    };
+                };
+            };
+            /** @description Error response. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message?: string;
+                    };
+                };
+            };
+        };
+    };
+    createProject: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description Org UUID or slug in the form `vcs-slug/org-name`. For projects that use GitLab or GitHub App, use `circleci` as the `vcs-slug` and replace the `org-name` with the organization ID (found in Organization Settings).
+                 * @example gh/CircleCI-Public
+                 */
+                "org-slug-or-id": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /**
+                     * @description The name of the project
+                     * @example api-preview-docs
+                     */
+                    name: string;
+                };
+            };
+        };
+        responses: {
+            /** @description The new project */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description Project slug in the form `vcs-slug/org-name/repo-name`. The `/` characters may be URL-escaped. For projects that use GitLab or GitHub App, use `circleci` as the `vcs-slug`, replace `org-name` with the organization ID (found in Organization Settings), and replace `repo-name` with the project ID (found in Project Settings).
+                         * @example gh/CircleCI-Public/api-preview-docs
+                         */
+                        slug: string;
+                        /**
+                         * @description The name of the project
+                         * @example api-preview-docs
+                         */
+                        name: string;
+                        /** Format: uuid */
+                        id: string;
+                        /**
+                         * @description The name of the organization the project belongs to
+                         * @example CircleCI-Public
+                         */
+                        organization_name: string;
+                        /**
+                         * @description The slug of the organization the project belongs to
+                         * @example gh/CircleCI-Public
+                         */
+                        organization_slug: string;
+                        /**
+                         * Format: uuid
+                         * @description The id of the organization the project belongs to
+                         * @example ec6887ec-7d44-4b31-b468-7e552408ee32
+                         */
+                        organization_id: string;
+                        /** @description Information about the VCS that hosts the project source code. */
+                        vcs_info: {
+                            /**
+                             * @description URL to the repository hosting the project's code
+                             * @example https://github.com/CircleCI-Public/api-preview-docs
+                             */
+                            vcs_url: string;
+                            /**
+                             * @description The VCS provider
+                             * @enum {string}
+                             */
+                            provider: "Bitbucket" | "CircleCI" | "GitHub";
+                            /** @example main */
+                            default_branch: string;
+                        };
+                    };
+                };
+            };
+            /** @description Error response. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message?: string;
+                    };
+                };
+            };
+        };
+    };
+    listURLOrbAllowListEntries: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description Org UUID or slug in the form `vcs-slug/org-name`. For projects that use GitLab or GitHub App, use `circleci` as the `vcs-slug` and replace the `org-name` with the organization ID (found in Organization Settings).
+                 * @example gh/CircleCI-Public
+                 */
+                "org-slug-or-id": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description URL Orb allow-list entries */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        items: {
+                            /**
+                             * @description URL orb allow-list entry UUID.
+                             * @example ba98990a-5a00-4cad-b55e-b44117b92e0c
+                             */
+                            id: string;
+                            /**
+                             * @description Name of the URL orb allow-list entry.
+                             * @example Allow URL orbs from raw.githubusercontent.com/CircleCI-Public
+                             */
+                            name: string;
+                            /**
+                             * @description URL prefix. URL orb references that start with this prefix will be allowed by this allow-list entry.
+                             * @example https://raw.githubusercontent.com/CircleCI-Public/orbs/refs/heads/main/
+                             */
+                            prefix: unknown;
+                            /**
+                             * @description An authentication method to use for fetching URL orb references that match this allow-list entry's prefix. Allowed values are "bitbucket-oauth", "github-oauth", "github-app", or "none".
+                             * @example github-app
+                             * @enum {string}
+                             */
+                            auth: "github-oauth" | "none" | "bitbucket-oauth" | "github-app";
+                        }[];
+                    };
+                };
+            };
+            /** @description Error response. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message?: string;
+                    };
+                };
+            };
+        };
+    };
+    createURLOrbAllowListEntry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description Org UUID or slug in the form `vcs-slug/org-name`. For projects that use GitLab or GitHub App, use `circleci` as the `vcs-slug` and replace the `org-name` with the organization ID (found in Organization Settings).
+                 * @example gh/CircleCI-Public
+                 */
+                "org-slug-or-id": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /**
+                     * @description Name of the URL orb allow-list entry.
+                     * @example Allow URL orbs from raw.githubusercontent.com/CircleCI-Public
+                     */
+                    name: string;
+                    /**
+                     * @description URL prefix. URL orb references that start with this prefix will be allowed by this allow-list entry.
+                     * @example https://raw.githubusercontent.com/CircleCI-Public/orbs/refs/heads/main/
+                     */
+                    prefix: unknown;
+                    /**
+                     * @description An authentication method to use for fetching URL orb references that match this allow-list entry's prefix. Allowed values are "bitbucket-oauth", "github-oauth", "github-app", or "none".
+                     * @example github-app
+                     * @enum {string}
+                     */
+                    auth: "github-oauth" | "none" | "bitbucket-oauth" | "github-app";
+                };
+            };
+        };
+        responses: {
+            /** @description The ID of the new URL Orb allow-list entry */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description URL orb allow-list entry UUID.
+                         * @example ba98990a-5a00-4cad-b55e-b44117b92e0c
+                         */
+                        id: string;
+                        /**
+                         * @description Message describing the outcome of an operation
+                         * @example Created.
+                         */
+                        message: string;
+                    };
+                };
+            };
+            /** @description Error response. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message?: string;
+                    };
+                };
+            };
+        };
+    };
+    removeURLOrbAllowListEntry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description Org UUID or slug in the form `vcs-slug/org-name`. For projects that use GitLab or GitHub App, use `circleci` as the `vcs-slug` and replace the `org-name` with the organization ID (found in Organization Settings).
+                 * @example gh/CircleCI-Public
+                 */
+                "org-slug-or-id": string;
+                /**
+                 * @description URL orb allow-list entry UUID.
+                 * @example ba98990a-5a00-4cad-b55e-b44117b92e0c
+                 */
+                "allow-list-entry-id": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The ID of the removed URL Orb allow-list entry */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description URL orb allow-list entry UUID.
+                         * @example ba98990a-5a00-4cad-b55e-b44117b92e0c
+                         */
+                        id: string;
+                        /**
+                         * @description Message describing the outcome of an operation
+                         * @example Created.
+                         */
+                        message: string;
+                    };
+                };
+            };
+            /** @description Error response. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message?: string;
+                    };
+                };
+            };
+        };
+    };
     listPipelines: {
         parameters: {
             query?: {
@@ -3856,7 +5025,7 @@ export interface operations {
                                  * @description The type of error.
                                  * @enum {string}
                                  */
-                                type: "config" | "config-fetch" | "timeout" | "permission" | "other" | "trigger-rule" | "plan";
+                                type: "config" | "invalid-trigger-setup" | "config-fetch" | "timeout" | "permission" | "other" | "trigger-rule" | "plan";
                                 /** @description A human-readable error message. */
                                 message: string;
                             }[];
@@ -4070,7 +5239,7 @@ export interface operations {
                              * @description The type of error.
                              * @enum {string}
                              */
-                            type: "config" | "config-fetch" | "timeout" | "permission" | "other" | "trigger-rule" | "plan";
+                            type: "config" | "invalid-trigger-setup" | "config-fetch" | "timeout" | "permission" | "other" | "trigger-rule" | "plan";
                             /** @description A human-readable error message. */
                             message: string;
                         }[];
@@ -4238,6 +5407,45 @@ export interface operations {
             };
         };
     };
+    getPipelineValuesById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description The unique ID of the pipeline.
+                 * @example 5034460f-c7c4-4c43-9457-de07e2029e7b
+                 */
+                "pipeline-id": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A JSON object of pipeline values */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: string | number | boolean;
+                    };
+                };
+            };
+            /** @description Error response. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message?: string;
+                    };
+                };
+            };
+        };
+    };
     listWorkflowsByPipelineId: {
         parameters: {
             query?: {
@@ -4282,6 +5490,12 @@ export interface operations {
                              */
                             id: string;
                             /**
+                             * Format: int64
+                             * @description Present if this workflow was auto-rerun from a previous workflow. The Nth auto-rerun workflow will have auto_rerun_number N
+                             * @example 1
+                             */
+                            auto_rerun_number?: number;
+                            /**
                              * @description The name of the workflow.
                              * @example build-and-test
                              */
@@ -4306,6 +5520,12 @@ export interface operations {
                             status: "success" | "running" | "not_run" | "failed" | "error" | "failing" | "on_hold" | "canceled" | "unauthorized";
                             /** Format: uuid */
                             started_by: string;
+                            /**
+                             * Format: int64
+                             * @description The maximum number of auto reruns specified for the workflow.
+                             * @example 5
+                             */
+                            max_auto_reruns?: number;
                             /**
                              * Format: int64
                              * @description The number of the pipeline this workflow belongs to.
@@ -4382,13 +5602,13 @@ export interface operations {
                         organization_name: string;
                         /**
                          * @description The slug of the organization the project belongs to
-                         * @example CircleCI-Public
+                         * @example gh/CircleCI-Public
                          */
                         organization_slug: string;
                         /**
                          * Format: uuid
                          * @description The id of the organization the project belongs to
-                         * @example CircleCI-Public
+                         * @example ec6887ec-7d44-4b31-b468-7e552408ee32
                          */
                         organization_id: string;
                         /** @description Information about the VCS that hosts the project source code. */
@@ -4406,6 +5626,46 @@ export interface operations {
                             /** @example main */
                             default_branch: string;
                         };
+                    };
+                };
+            };
+            /** @description Error response. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message?: string;
+                    };
+                };
+            };
+        };
+    };
+    deleteProjectBySlug: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description Project slug in the form `vcs-slug/org-name/repo-name`. The `/` characters may be URL-escaped. For projects that use GitLab or GitHub App, use `circleci` as the `vcs-slug`, replace `org-name` with the organization ID (found in Organization Settings), and replace `repo-name` with the project ID (found in Project Settings).
+                 * @example gh/CircleCI-Public/api-preview-docs
+                 */
+                "project-slug": string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A confirmation message. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description A human-readable message */
+                        message: string;
                     };
                 };
             };
@@ -5016,6 +6276,7 @@ export interface operations {
                         /**
                          * Format: int64
                          * @description The number of the job.
+                         * @example 1
                          */
                         number: number;
                         /** @description Info about a pipeline the job is a part of. */
@@ -5166,7 +6427,7 @@ export interface operations {
                                  * @description The type of error.
                                  * @enum {string}
                                  */
-                                type: "config" | "config-fetch" | "timeout" | "permission" | "other" | "trigger-rule" | "plan";
+                                type: "config" | "invalid-trigger-setup" | "config-fetch" | "timeout" | "permission" | "other" | "trigger-rule" | "plan";
                                 /** @description A human-readable error message. */
                                 message: string;
                             }[];
@@ -5413,7 +6674,7 @@ export interface operations {
                                  * @description The type of error.
                                  * @enum {string}
                                  */
-                                type: "config" | "config-fetch" | "timeout" | "permission" | "other" | "trigger-rule" | "plan";
+                                type: "config" | "invalid-trigger-setup" | "config-fetch" | "timeout" | "permission" | "other" | "trigger-rule" | "plan";
                                 /** @description A human-readable error message. */
                                 message: string;
                             }[];
@@ -5577,7 +6838,7 @@ export interface operations {
                              * @description The type of error.
                              * @enum {string}
                              */
-                            type: "config" | "config-fetch" | "timeout" | "permission" | "other" | "trigger-rule" | "plan";
+                            type: "config" | "invalid-trigger-setup" | "config-fetch" | "timeout" | "permission" | "other" | "trigger-rule" | "plan";
                             /** @description A human-readable error message. */
                             message: string;
                         }[];
@@ -5792,6 +7053,8 @@ export interface operations {
                              * @description The attribution actor who will run the scheduled pipeline.
                              */
                             actor: {
+                                /** @description URL to the user's avatar on the VCS */
+                                avatar_url: string;
                                 /**
                                  * Format: uuid
                                  * @description The unique ID of the user.
@@ -5970,6 +7233,8 @@ export interface operations {
                          * @description The attribution actor who will run the scheduled pipeline.
                          */
                         actor: {
+                            /** @description URL to the user's avatar on the VCS */
+                            avatar_url: string;
                             /**
                              * Format: uuid
                              * @description The unique ID of the user.
@@ -6227,6 +7492,8 @@ export interface operations {
                          * @description The attribution actor who will run the scheduled pipeline.
                          */
                         actor: {
+                            /** @description URL to the user's avatar on the VCS */
+                            avatar_url: string;
                             /**
                              * Format: uuid
                              * @description The unique ID of the user.
@@ -6422,6 +7689,8 @@ export interface operations {
                          * @description The attribution actor who will run the scheduled pipeline.
                          */
                         actor: {
+                            /** @description URL to the user's avatar on the VCS */
+                            avatar_url: string;
                             /**
                              * Format: uuid
                              * @description The unique ID of the user.
@@ -6472,6 +7741,8 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
+                        /** @description URL to the user's avatar on the VCS */
+                        avatar_url: string;
                         /**
                          * Format: uuid
                          * @description The unique ID of the user.
@@ -6907,6 +8178,12 @@ export interface operations {
                          */
                         id: string;
                         /**
+                         * Format: int64
+                         * @description Present if this workflow was auto-rerun from a previous workflow. The Nth auto-rerun workflow will have auto_rerun_number N
+                         * @example 1
+                         */
+                        auto_rerun_number?: number;
+                        /**
                          * @description The name of the workflow.
                          * @example build-and-test
                          */
@@ -6931,6 +8208,12 @@ export interface operations {
                         status: "success" | "running" | "not_run" | "failed" | "error" | "failing" | "on_hold" | "canceled" | "unauthorized";
                         /** Format: uuid */
                         started_by: string;
+                        /**
+                         * Format: int64
+                         * @description The maximum number of auto reruns specified for the workflow.
+                         * @example 5
+                         */
+                        max_auto_reruns?: number;
                         /**
                          * Format: int64
                          * @description The number of the pipeline this workflow belongs to.
@@ -7078,6 +8361,7 @@ export interface operations {
                             /**
                              * Format: int64
                              * @description The number of the job.
+                             * @example 1
                              */
                             job_number?: number;
                             /**
@@ -7112,6 +8396,26 @@ export interface operations {
                              * @enum {string}
                              */
                             type: "build" | "approval";
+                            /**
+                             * @description A sequence of the unique jobs and required statuses that this job depends upon in the workflow.
+                             * @example {
+                             *       "d212e286-9962-4ed7-92e2-8699622ed720": [
+                             *         "success"
+                             *       ],
+                             *       "74be7583-44de-42a6-be75-8344de52a6f2": [
+                             *         "failed",
+                             *         "canceled"
+                             *       ],
+                             *       "a3349b77-90f7-4a39-b49b-7790f7da3943": [
+                             *         "success",
+                             *         "failed",
+                             *         "canceled"
+                             *       ]
+                             *     }
+                             */
+                            requires?: {
+                                [key: string]: ("success" | "failed" | "canceled")[];
+                            };
                             /**
                              * Format: date-time
                              * @description The time when the job stopped.
@@ -7754,6 +9058,254 @@ export interface operations {
             500: components["responses"]["UnexpectedServerError"];
         };
     };
+    listContexts: {
+        parameters: {
+            query?: {
+                /** @description The unique ID of the owner of the context. This is the organization ID. Specify either owner/organization ID or the owner/organization slug. Find the organization ID and slug in the CircleCI web app (Organization Settings > Overview). Owner/organization slug is not supported for CircleCI server. */
+                "owner-id"?: components["parameters"]["owner_id_query"];
+                /** @description A string that represents an organization. This is the organization slug. Specify either this or organization/owner ID. Find the organization ID and slug in the CircleCI web app (Organization Settings > Overview). Owner/organization slug is not supported for CircleCI server. */
+                "owner-slug"?: components["parameters"]["owner_slug_query"];
+                /** @description The type of the owner. Defaults to "organization". Use "account" if you are using CircleCI server. */
+                "owner-type"?: components["parameters"]["owner_type_query"];
+                /** @description A token to specify which page of results to fetch. */
+                "page-token"?: components["parameters"]["page_token"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A paginated list of contexts */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["context_list"];
+                };
+            };
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            429: components["responses"]["429_rate_limit_exceeded"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    createContext: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["context_created"];
+            };
+        };
+        responses: {
+            /** @description The new context */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * Format: uuid
+                         * @description The unique ID of the context.
+                         */
+                        id: string;
+                        /** @description The user-defined name of the context. */
+                        name: string;
+                        /**
+                         * Format: date-time
+                         * @description The date and time the context was created.
+                         * @example 2015-09-21T17:29:21.042Z
+                         */
+                        created_at: string;
+                    };
+                };
+            };
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            429: components["responses"]["429_rate_limit_exceeded"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    getContext: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a context.
+                 * @example be8bb2e3-c3d6-4098-89f4-572ff976ba9a
+                 */
+                context_id: components["parameters"]["context_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The context */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["context"];
+                };
+            };
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            429: components["responses"]["429_rate_limit_exceeded"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    deleteContext: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a context.
+                 * @example be8bb2e3-c3d6-4098-89f4-572ff976ba9a
+                 */
+                context_id: components["parameters"]["context_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A confirmation message */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["delete_context_response"];
+                };
+            };
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            429: components["responses"]["429_rate_limit_exceeded"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    listEnvironmentVariablesFromContext: {
+        parameters: {
+            query?: {
+                /** @description A token to specify which page of results to fetch. */
+                "page-token"?: components["parameters"]["page_token"];
+            };
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a context.
+                 * @example be8bb2e3-c3d6-4098-89f4-572ff976ba9a
+                 */
+                context_id: components["parameters"]["context_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A paginated list of environment variables */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["env_var_list"];
+                };
+            };
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            429: components["responses"]["429_rate_limit_exceeded"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    addEnvironmentVariableToContext: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a context.
+                 * @example be8bb2e3-c3d6-4098-89f4-572ff976ba9a
+                 */
+                context_id: components["parameters"]["context_id"];
+                /**
+                 * @description The name of the environment variable.
+                 * @example POSTGRES_USER
+                 */
+                env_var_name: components["parameters"]["env_var_name"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /**
+                     * @description The value of the environment variable
+                     * @example some-secret-value
+                     */
+                    value: string;
+                };
+            };
+        };
+        responses: {
+            /** @description The new environment variable */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["update_env_var"];
+                };
+            };
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            429: components["responses"]["429_rate_limit_exceeded"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    deleteEnvironmentVariableFromContext: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a context.
+                 * @example be8bb2e3-c3d6-4098-89f4-572ff976ba9a
+                 */
+                context_id: components["parameters"]["context_id"];
+                /**
+                 * @description The name of the environment variable.
+                 * @example POSTGRES_USER
+                 */
+                env_var_name: components["parameters"]["env_var_name"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A confirmation message */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["delete_env_var"];
+                };
+            };
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            429: components["responses"]["429_rate_limit_exceeded"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
     getContextRestrictions: {
         parameters: {
             query?: never;
@@ -7800,25 +9352,16 @@ export interface operations {
         };
         requestBody: {
             content: {
-                /** @example {
-                 *       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                 *       "restriction_type": "project",
-                 *       "restriction_value": "405d8375-3514-403b-8c43-83ae74cfe0e9"
-                 *     } */
                 "application/json": {
                     /**
-                     * Format: uuid
-                     * @deprecated
-                     * @description Deprecated - Use "restriction_type" and "restriction_value"
-                     *     instead.
-                     *
-                     *     The project ID to use for a project restriction. This is
-                     *     mutually exclusive with restriction_type and restriction_value
-                     *     and implies restriction_type is "project".
-                     *
+                     * @description Type of the restriction.
+                     * @enum {string}
                      */
-                    project_id?: string;
-                    restriction_type?: string;
+                    restriction_type?: "project" | "expression" | "group";
+                    /** @description Value used to evaluate the restriction. If the `restriction_type`
+                     *     is `project`, this will be the project UUID. If the `restriction_type`
+                     *     is `expression`, this will be the expression rule.
+                     *      */
                     restriction_value?: string;
                 };
             };
@@ -7897,23 +9440,23 @@ export interface operations {
             500: components["responses"]["500_internal_server_error"];
         };
     };
-    createProject: {
+    createProject1: {
         parameters: {
             query?: never;
             header?: never;
             path: {
                 /**
-                 * @description The `provider` segment of a project or org slug, the first of the three. This may be a VCS. For projects that use GitLab or GitHub App, use `circleci`.
+                 * @description The first segment of the slash-separated project slug, as shown in Project Settings > Overview.
                  * @example gh
                  */
                 provider: components["parameters"]["provider"];
                 /**
-                 * @description The `organization` segment of a project or org slug, the second of the three. For GitHub OAuth or Bitbucket projects, this is the organization name. For projects that use GitLab or GitHub App, use the organization ID (found in Organization Settings).
+                 * @description The second segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the org name (e.g. `my-org`) or an ID (e.g. `43G3lM5RtfFE7v5sa4nWAU`).
                  * @example CircleCI-Public
                  */
                 organization: components["parameters"]["organization"];
                 /**
-                 * @description The `project` segment of a project slug, the third of the three. For GitHub OAuth or Bitbucket projects, this is the repository name. For projects that use GitLab or GitHub App, use the project ID (found in Project Settings).
+                 * @description The third segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the project name (e.g. `my-project`) or an ID (e.g. `44n9wujWcTnVZ2b5S8Fnat`).
                  * @example api-preview-docs
                  */
                 project: components["parameters"]["project"];
@@ -7956,17 +9499,17 @@ export interface operations {
             header?: never;
             path: {
                 /**
-                 * @description The `provider` segment of a project or org slug, the first of the three. This may be a VCS. For projects that use GitLab or GitHub App, use `circleci`.
+                 * @description The first segment of the slash-separated project slug, as shown in Project Settings > Overview.
                  * @example gh
                  */
                 provider: components["parameters"]["provider"];
                 /**
-                 * @description The `organization` segment of a project or org slug, the second of the three. For GitHub OAuth or Bitbucket projects, this is the organization name. For projects that use GitLab or GitHub App, use the organization ID (found in Organization Settings).
+                 * @description The second segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the org name (e.g. `my-org`) or an ID (e.g. `43G3lM5RtfFE7v5sa4nWAU`).
                  * @example CircleCI-Public
                  */
                 organization: components["parameters"]["organization"];
                 /**
-                 * @description The `project` segment of a project slug, the third of the three. For GitHub OAuth or Bitbucket projects, this is the repository name. For projects that use GitLab or GitHub App, use the project ID (found in Project Settings).
+                 * @description The third segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the project name (e.g. `my-project`) or an ID (e.g. `44n9wujWcTnVZ2b5S8Fnat`).
                  * @example api-preview-docs
                  */
                 project: components["parameters"]["project"];
@@ -7997,17 +9540,17 @@ export interface operations {
             header?: never;
             path: {
                 /**
-                 * @description The `provider` segment of a project or org slug, the first of the three. This may be a VCS. For projects that use GitLab or GitHub App, use `circleci`.
+                 * @description The first segment of the slash-separated project slug, as shown in Project Settings > Overview.
                  * @example gh
                  */
                 provider: components["parameters"]["provider"];
                 /**
-                 * @description The `organization` segment of a project or org slug, the second of the three. For GitHub OAuth or Bitbucket projects, this is the organization name. For projects that use GitLab or GitHub App, use the organization ID (found in Organization Settings).
+                 * @description The second segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the org name (e.g. `my-org`) or an ID (e.g. `43G3lM5RtfFE7v5sa4nWAU`).
                  * @example CircleCI-Public
                  */
                 organization: components["parameters"]["organization"];
                 /**
-                 * @description The `project` segment of a project slug, the third of the three. For GitHub OAuth or Bitbucket projects, this is the repository name. For projects that use GitLab or GitHub App, use the project ID (found in Project Settings).
+                 * @description The third segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the project name (e.g. `my-project`) or an ID (e.g. `44n9wujWcTnVZ2b5S8Fnat`).
                  * @example api-preview-docs
                  */
                 project: components["parameters"]["project"];
@@ -8054,6 +9597,153 @@ export interface operations {
             403: components["responses"]["403_permission_denied"];
             404: components["responses"]["404_project_not_found"];
             429: components["responses"]["429_rate_limit_exceeded"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    getOrganizationGroups: {
+        parameters: {
+            query?: {
+                /** @description The number of results per page. */
+                limit?: components["parameters"]["limit"];
+                /** @description A token to specify which page of results to fetch. */
+                "page-token"?: components["parameters"]["page_token"];
+            };
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of an organization.
+                 * @example b9291e0d-a11e-41fb-8517-c545388b5953
+                 */
+                org_id: components["parameters"]["org_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successfully get all the groups in an organization. Results are paginated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["groups"];
+                };
+            };
+            403: components["responses"]["403_permission_denied"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    createOrganizationGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of an organization.
+                 * @example b9291e0d-a11e-41fb-8517-c545388b5953
+                 */
+                org_id: components["parameters"]["org_id"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @description Name of the group */
+                    name: string;
+                    /** @description Description to describe the group */
+                    description?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful creation of a group. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["group"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            401: components["responses"]["401_invalid_token"];
+            403: components["responses"]["403_permission_denied"];
+            404: components["responses"]["404_entity_not_found"];
+            409: components["responses"]["409_group_conflict"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    getGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of an organization.
+                 * @example b9291e0d-a11e-41fb-8517-c545388b5953
+                 */
+                org_id: components["parameters"]["org_id"];
+                /**
+                 * @description An opaque identifier of a group.
+                 * @example 39f660db-f49b-417e-ad79-2769ba29faf7
+                 */
+                group_id: components["parameters"]["group_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successfully gets a group. Members not included. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["group"];
+                };
+            };
+            403: components["responses"]["403_permission_denied"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    deleteGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of an organization.
+                 * @example b9291e0d-a11e-41fb-8517-c545388b5953
+                 */
+                org_id: components["parameters"]["org_id"];
+                /**
+                 * @description An opaque identifier of a group.
+                 * @example 39f660db-f49b-417e-ad79-2769ba29faf7
+                 */
+                group_id: components["parameters"]["group_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful deletion of a group. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @default Group deleted. */
+                        message: string;
+                    };
+                };
+            };
+            401: components["responses"]["401_invalid_token"];
+            403: components["responses"]["403_permission_denied"];
+            404: components["responses"]["404_entity_not_found"];
             500: components["responses"]["500_internal_server_error"];
         };
     };
@@ -8137,6 +9827,612 @@ export interface operations {
             401: components["responses"]["401_invalid_token"];
             404: components["responses"]["404_entity_not_found"];
             429: components["responses"]["429_rate_limit_exceeded"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    triggerPipelineRun: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description The first segment of the slash-separated project slug, as shown in Project Settings > Overview.
+                 * @example gh
+                 */
+                provider: components["parameters"]["providerNoGitlab"];
+                /**
+                 * @description The second segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the org name (e.g. `my-org`) or an ID (e.g. `43G3lM5RtfFE7v5sa4nWAU`).
+                 * @example CircleCI-Public
+                 */
+                organization: components["parameters"]["organization"];
+                /**
+                 * @description The third segment of the slash-separated project slug, as shown in Project Settings > Overview. Depending on the organization type, this may be the project name (e.g. `my-project`) or an ID (e.g. `44n9wujWcTnVZ2b5S8Fnat`).
+                 * @example api-preview-docs
+                 */
+                project: components["parameters"]["project"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["triggerPipelineRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful response with no created pipeline. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["pipelineNotTriggeredResponse"];
+                };
+            };
+            /** @description Successful response. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["pipelineTriggeredResponse"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+        };
+    };
+    listPipelineDefinitions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a project.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                project_id: components["parameters"]["project_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["pipelineDefinitionList"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    createPipelineDefinition: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a project.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                project_id: components["parameters"]["project_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["createPipelineDefinitionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["pipelineDefinition"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    getPipelineDefinition: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a project.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                project_id: components["parameters"]["project_id"];
+                /**
+                 * @description An opaque identifier of a pipeline definition.
+                 * @example 6cb29b00-8e02-4357-8bc0-313983bf1f46
+                 */
+                pipeline_definition_id: components["parameters"]["pipeline_definition_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["pipelineDefinition"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    deletePipelineDefinition: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a project.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                project_id: components["parameters"]["project_id"];
+                /**
+                 * @description An opaque identifier of a pipeline definition.
+                 * @example 6cb29b00-8e02-4357-8bc0-313983bf1f46
+                 */
+                pipeline_definition_id: components["parameters"]["pipeline_definition_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["pipelineDefinitionDeleted"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    updatePipelineDefinition: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a project.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                project_id: components["parameters"]["project_id"];
+                /**
+                 * @description An opaque identifier of a pipeline definition.
+                 * @example 6cb29b00-8e02-4357-8bc0-313983bf1f46
+                 */
+                pipeline_definition_id: components["parameters"]["pipeline_definition_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["updatePipelineDefinitionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["pipelineDefinition"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    listPipelineDefinitionTriggers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a project.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                project_id: components["parameters"]["project_id"];
+                /**
+                 * @description An opaque identifier of a pipeline definition.
+                 * @example 6cb29b00-8e02-4357-8bc0-313983bf1f46
+                 */
+                pipeline_definition_id: components["parameters"]["pipeline_definition_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["triggerList"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    createTrigger: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a project.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                project_id: components["parameters"]["project_id"];
+                /**
+                 * @description An opaque identifier of a pipeline definition.
+                 * @example 6cb29b00-8e02-4357-8bc0-313983bf1f46
+                 */
+                pipeline_definition_id: components["parameters"]["pipeline_definition_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["createTriggerRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["trigger"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    getTrigger: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a project.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                project_id: components["parameters"]["project_id"];
+                /**
+                 * @description An opaque identifier of a trigger.
+                 * @example bbea3a3d-4686-48b6-8d2d-2a14ace3913c
+                 */
+                trigger_id: components["parameters"]["trigger_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["trigger"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    deleteTrigger: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a project.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                project_id: components["parameters"]["project_id"];
+                /**
+                 * @description An opaque identifier of a trigger.
+                 * @example bbea3a3d-4686-48b6-8d2d-2a14ace3913c
+                 */
+                trigger_id: components["parameters"]["trigger_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["triggerDeleted"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    updateTrigger: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a project.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                project_id: components["parameters"]["project_id"];
+                /**
+                 * @description An opaque identifier of a trigger.
+                 * @example bbea3a3d-4686-48b6-8d2d-2a14ace3913c
+                 */
+                trigger_id: components["parameters"]["trigger_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["updateTriggerRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["trigger"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            401: components["responses"]["401_invalid_token"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    rollbackProject: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a project.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                project_id: components["parameters"]["project_id"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["rollbackProjectRequest"];
+            };
+        };
+        responses: {
+            /** @description Rollback request accepted. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["rollbackProjectResponse"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            404: components["responses"]["404_entity_not_found"];
+            409: components["responses"]["409_entity_conflict"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    listEnvironments: {
+        parameters: {
+            query: {
+                /**
+                 * @description An opaque identifier of an organization used in query parameters.
+                 * @example b9291e0d-a11e-41fb-8517-c545388b5953
+                 */
+                "org-id": components["parameters"]["org_id_query"];
+                /** @description The number of results per page. */
+                "page-size": components["parameters"]["page_size"];
+                /** @description A token to specify which page of results to fetch. */
+                "page-token"?: components["parameters"]["page_token"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated environments list */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["paginatedEnvironmentList"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    getEnvironment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of an environment.
+                 * @example 1c23d2cb-07b1-4a28-8af3-e369732050ed
+                 */
+                environment_id: components["parameters"]["environment_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Environment */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["environment"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    listComponents: {
+        parameters: {
+            query: {
+                /**
+                 * @description An opaque identifier of an organization used in query parameters.
+                 * @example b9291e0d-a11e-41fb-8517-c545388b5953
+                 */
+                "org-id": components["parameters"]["org_id_query"];
+                /**
+                 * @description An opaque identifier of an project used in query parameters.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                "project-id"?: components["parameters"]["project_id_query"];
+                /** @description The number of results per page. */
+                "page-size": components["parameters"]["page_size"];
+                /** @description A token to specify which page of results to fetch. */
+                "page-token"?: components["parameters"]["page_token"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated components list */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["paginatedComponentList"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    getComponent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a component.
+                 * @example b9291e0d-a11e-41fb-8517-c545388b5953
+                 */
+                component_id: components["parameters"]["component_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["component"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            404: components["responses"]["404_entity_not_found"];
+            500: components["responses"]["500_internal_server_error"];
+        };
+    };
+    listComponentVersions: {
+        parameters: {
+            query?: {
+                /**
+                 * @description An opaque identifier of an environment used in query parameters.
+                 * @example 39723015-b399-4601-9ff6-bd1bfbed8fa8
+                 */
+                "environment-id"?: components["parameters"]["environment_id_query"];
+            };
+            header?: never;
+            path: {
+                /**
+                 * @description An opaque identifier of a component.
+                 * @example b9291e0d-a11e-41fb-8517-c545388b5953
+                 */
+                component_id: components["parameters"]["component_id"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated component versions list */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["paginatedComponentVersionList"];
+                };
+            };
+            400: components["responses"]["400_unexpected_request_body"];
+            404: components["responses"]["404_entity_not_found"];
             500: components["responses"]["500_internal_server_error"];
         };
     };
